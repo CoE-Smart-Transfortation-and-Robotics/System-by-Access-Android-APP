@@ -28,7 +28,7 @@ class OnboardingAdapter(private val items: List<OnboardingItem>, private val onB
             }
             holder.btnSkip.visibility = View.VISIBLE
             holder.btnSkip.setOnClickListener {
-                onSecondaryClick
+                onSecondaryClick()
             }
         } else {
             holder.btnNext.visibility = View.GONE

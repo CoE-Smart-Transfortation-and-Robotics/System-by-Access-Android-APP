@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.telkom.ceostar.R
 import com.telkom.ceostar.ui.auth.LoginActivity
 import com.telkom.ceostar.ui.home.HomeActivity
@@ -23,15 +24,13 @@ class OnboardActivity : AppCompatActivity() {
 //            insets
 //        }
 
-        val viewPager = findViewById<RecyclerView>(R.id.viewPager)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val items = listOf(
             OnboardingItem(R.drawable.onboardone, "Pesan tiket dimana saja!", "Dengan aplikasi ini, kamu bisa pesan tiket kereta api dengan mudah dan cepat. Cukup beberapa klik, tiket sudah ada di tanganmu."),
             OnboardingItem(R.drawable.onboardone, "Pesan tiket dimana saja!", "Dengan aplikasi ini, kamu bisa pesan tiket kereta api dengan mudah dan cepat. Cukup beberapa klik, tiket sudah ada di tanganmu."),
             OnboardingItem(R.drawable.onboardone, "Pesan tiket dimana saja!", "Dengan aplikasi ini, kamu bisa pesan tiket kereta api dengan mudah dan cepat. Cukup beberapa klik, tiket sudah ada di tanganmu."),
             OnboardingItem(R.drawable.onboardone, "Pesan tiket dimana saja!", "Dengan aplikasi ini, kamu bisa pesan tiket kereta api dengan mudah dan cepat. Cukup beberapa klik, tiket sudah ada di tanganmu."),
         )
-
-        viewPager.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         viewPager.adapter = OnboardingAdapter(items, {
             startActivity(Intent(this, LoginActivity::class.java))

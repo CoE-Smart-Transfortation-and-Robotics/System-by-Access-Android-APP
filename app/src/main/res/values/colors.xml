@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#1E68AC</color>
     <color name="secondary">#FF6B00</color>
+    <color name="grey">#979797</color>
+    <color name="darkGrey">#3F3F3F</color>
+    <color name="colorAccent">#0195f7</color>
 </resources>
