@@ -19,6 +19,7 @@
             android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -134,15 +135,13 @@
             android:textAlignment="textStart"
             android:textColor="@color/black"
             app:cornerRadius="0dp"
-            app:icon="@drawable/right_arrow"
-            app:iconGravity="end"
-            app:iconSize="24dp"
-            app:iconTint="@color/black"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="16dp"
+            android:drawableTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardUser"
-            app:layout_constraintVertical_bias="0.0">
-
-        </com.google.android.material.button.MaterialButton>
+            app:layout_constraintVertical_bias="0.0"/>
 
         <View
             android:id="@+id/separatorOne"
@@ -163,20 +162,19 @@
             android:id="@+id/riwayat_transaksi_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
             android:text="Riwayat Transaksi"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             app:cornerRadius="0dp"
-            app:icon="@drawable/right_arrow"
-            app:iconGravity="end"
-            app:iconSize="24dp"
-            app:iconTint="@color/black"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/change_password_button"
-            app:layout_constraintVertical_bias="0.0">
-        </com.google.android.material.button.MaterialButton>
+            app:layout_constraintTop_toBottomOf="@+id/separatorOne"
+            app:layout_constraintVertical_bias="0.0"/>
 
         <View
             android:id="@+id/separatorTwo"
@@ -184,14 +182,132 @@
             android:layout_height="0.5dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
             android:background="@color/grey"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/riwayat_transaksi_button"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/riwayat_transaksi_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/member_benefit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:text="Member Benefit"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            app:cornerRadius="0dp"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorTwo"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <View
+            android:id="@+id/separatorThree"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/member_benefit_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/metode_pembayaran_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:text="Metode Pembayaran"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            app:cornerRadius="0dp"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorThree"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <View
+            android:id="@+id/separatorFour"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/metode_pembayaran_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/face_recognition_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:text="Registrasi Face Recognition"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            app:cornerRadius="0dp"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorFour"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <View
+            android:id="@+id/separatorFive"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/face_recognition_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/help_center_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:text="Pusat Bantuan"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:drawableLeft="@drawable/scan_icon"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/black"
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorFive"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <View
+            android:id="@+id/separatorSix"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/help_center_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
