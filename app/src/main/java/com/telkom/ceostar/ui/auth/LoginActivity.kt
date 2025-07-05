@@ -29,7 +29,6 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener {
             // Navigate to RegisterActivity
             startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
         }
 
     }
