@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.telkom.ceostar.ui.home.HomeFragment"
+        android:label="home"/>
+
+    <fragment
+        android:id="@+id/fragment_ticket"
+        android:name="com.telkom.ceostar.ui.home.TicketFragment"
+        android:label="ticket"/>
+
+    <fragment
+        android:id="@+id/fragment_train"
+        android:name="com.telkom.ceostar.ui.home.TrainFragment"
+        android:label="train"/>
+
+    <fragment
+        android:id="@+id/fragment_user"
+        android:name="com.telkom.ceostar.ui.home.UserFragment"
+        android:label="user"/>
+
+</navigation>
