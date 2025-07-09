@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fragment_home"
+        android:title="Beranda"
+        app:showAsAction="always"
+        android:icon="@drawable/home_outline_icon" />
+
+    <item
+        android:id="@+id/fragment_train"
+        android:title="Kereta"
+        app:showAsAction="always"
+        android:icon="@drawable/train_outline_icon"/>
+
+    <item
+        android:id="@+id/fragment_ticket"
+        android:title="Tiket saya"
+        app:showAsAction="always"
+        android:icon="@drawable/ticket_icon" />
+
+    <item
+        android:id="@+id/promo"
+        android:title="Promo"
+        app:showAsAction="always"
+        android:icon="@drawable/promo_icon"/>
+
+    <item
+        android:id="@+id/fragment_user"
+        android:title="Akun"
+        app:showAsAction="always"
+        android:icon="@drawable/person_outline_icon" />
+
+</menu>
