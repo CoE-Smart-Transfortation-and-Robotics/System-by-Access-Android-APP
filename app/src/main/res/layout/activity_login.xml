@@ -74,12 +74,14 @@
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxStrokeColor="@color/black"
                 app:cursorColor="@color/black"
-                app:hintEnabled="false">
+                app:hintEnabled="false"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
                     android:hint="Masukan Email atau No. Telp Anda"
                     android:textSize="16sp"
                     android:textColorHint="@color/grey"/>

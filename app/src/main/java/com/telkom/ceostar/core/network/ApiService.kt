@@ -12,16 +12,16 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("auth/login")
+    @POST("/api/auth/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<AuthResponse>
 
-    @POST("auth/register")
+    @POST("/api/auth/register")
     suspend fun register(@Body registerRequest: RegisterRequest): Response<AuthResponse>
 
     @POST("auth/logout")
-    suspend fun logout(): Response<ApiResponse<Any>>
+    suspend fun logout(): Response<ResponseBody>
 
-    @GET("api/train-schedules")
+    @GET("/")
     suspend fun pingServer(): Response<ResponseBody>
 
 }

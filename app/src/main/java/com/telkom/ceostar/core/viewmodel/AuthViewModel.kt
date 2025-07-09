@@ -46,9 +46,9 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun register(name: String, email: String, password: String, confirmPassword: String, phoneNumber: String? = null) {
+    fun register(name: String, email: String, password: String, confirmPassword: String) {
         viewModelScope.launch {
-            authRepository.register(name, email, password, confirmPassword, phoneNumber).collect {
+            authRepository.register(name, email, password, confirmPassword).collect {
                 _registerState.value = it
             }
         }

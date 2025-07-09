@@ -2,6 +2,7 @@ package com.telkom.ceostar.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -46,12 +47,32 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.buttonLogin.setOnClickListener {
-            val email = binding.emailField.text.toString()
+            goToConfirmation()
         }
 
         binding.buttonRegister.setOnClickListener {
             // Navigate to RegisterActivity
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+    }
+
+    private fun goToConfirmation(){
+        val email = binding.emailField.text.toString()
+
+        if (email.isEmpty()) {
+            binding.emailField.error = "Email tidak boleh kosong"
+            return
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.emailField.error = "Format email tidak valid"
+            return
+        }
+
+        binding.emailField.error = null // Clear any previous error
+
+        val goToConfirmationActivity = Intent(this, ConfirmationActivity::class.java)
+        goToConfirmationActivity.putExtra("EXTRA_EMAIL", email)
+        startActivity(goToConfirmationActivity)
     }
 }

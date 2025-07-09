@@ -1,5 +1,6 @@
-package com.telkom.ceostar.core.network
+package com.telkom.ceostar.core.di
 
+import com.telkom.ceostar.core.network.ApiService
 import com.telkom.ceostar.core.utils.Constants
 import dagger.Module
 import dagger.Provides

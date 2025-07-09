@@ -12,17 +12,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.telkom.ceostar.core.utils.Resource
+import com.telkom.ceostar.core.utils.SessionManager
 import com.telkom.ceostar.core.viewmodel.AuthViewModel
 import com.telkom.ceostar.databinding.ActivityMainBinding
+import com.telkom.ceostar.ui.home.HomeActivity
 import com.telkom.ceostar.ui.onboard.OnboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val authViewModel: AuthViewModel by viewModels()
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,36 +41,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        setupClickListeners()
-        observeConnectionState() // <-- Aktifkan ini
-
-        // Test connection saat app start
-        authViewModel.testConnection()
-    }
-
-    private fun setupClickListeners() {
-        binding.splashImage.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Testing connection...", Toast.LENGTH_SHORT).show()
-            authViewModel.testConnection()
-        }
-    }
-
-    private fun observeConnectionState() {
-        lifecycleScope.launch {
-            authViewModel.connectionState.collect { resource ->
-                when (resource) {
-                    is Resource.Loading -> {
-                        Toast.makeText(this@MainActivity, "Mengecek koneksi...", Toast.LENGTH_SHORT).show()
-                    }
-                    is Resource.Success -> {
-                        Toast.makeText(this@MainActivity, "✅ ${resource.data}", Toast.LENGTH_LONG).show()
-                    }
-                    is Resource.Error -> {
-                        Toast.makeText(this@MainActivity, "❌ Koneksi gagal: ${resource.message}", Toast.LENGTH_LONG).show()
-                    }
-                    null -> {}
-                }
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Cek apakah token ada
+            if (sessionManager.fetchAuthToken() != null) {
+                // Jika ada, langsung ke HomeActivity
+                startActivity(Intent(this, HomeActivity::class.java))
+            } else {
+                // Jika tidak ada, ke OnboardActivity
+                startActivity(Intent(this, OnboardActivity::class.java))
             }
-        }
+            finish() // Tutup MainActivity (splash screen)
+        }, 3000) // 3 detik delay
+
     }
+
+
 }

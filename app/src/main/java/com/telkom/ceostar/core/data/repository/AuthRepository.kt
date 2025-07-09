@@ -24,13 +24,24 @@ class AuthRepository @Inject constructor(
             val response = apiService.login(LoginRequest(email, password))
             if (response.isSuccessful) {
                 val authResponse = response.body()
-                if (authResponse?.success == true && authResponse.data != null) {
+
+                if (authResponse?.success == true &&
+                    authResponse.token != null &&
+                    authResponse.user != null) {
+
+                    // Create AuthData from response
+                    val authData = AuthData(
+                        token = authResponse.token,
+                        user = authResponse.user
+                    )
+
                     // Save auth data to preferences
                     preferencesManager.saveAuthData(
-                        authResponse.data.token,
-                        authResponse.data.user
+                        authData.token,
+                        authData.user
                     )
-                    emit(Resource.Success(authResponse.data))
+
+                    emit(Resource.Success(authData))
                 } else {
                     emit(Resource.Error(authResponse?.message ?: "Login failed"))
                 }
@@ -46,23 +57,33 @@ class AuthRepository @Inject constructor(
         name: String,
         email: String,
         password: String,
-        confirmPassword: String,
-        phoneNumber: String? = null
+        confirmPassword: String
     ): Flow<Resource<AuthData>> = flow {
         emit(Resource.Loading())
         try {
             val response = apiService.register(
-                RegisterRequest(name, email, password, confirmPassword, phoneNumber)
+                RegisterRequest(name, email, password, confirmPassword)
             )
             if (response.isSuccessful) {
                 val authResponse = response.body()
-                if (authResponse?.success == true && authResponse.data != null) {
+
+                if (authResponse?.success == true &&
+                    authResponse.token != null &&
+                    authResponse.user != null) {
+
+                    // Create AuthData from response
+                    val authData = AuthData(
+                        token = authResponse.token,
+                        user = authResponse.user
+                    )
+
                     // Save auth data to preferences
                     preferencesManager.saveAuthData(
-                        authResponse.data.token,
-                        authResponse.data.user
+                        authData.token,
+                        authData.user
                     )
-                    emit(Resource.Success(authResponse.data))
+
+                    emit(Resource.Success(authData))
                 } else {
                     emit(Resource.Error(authResponse?.message ?: "Registration failed"))
                 }
