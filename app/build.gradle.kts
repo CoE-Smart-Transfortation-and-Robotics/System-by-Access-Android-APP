@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.glide)
     implementation(libs.lottie)
+    implementation(libs.shimmer)
 
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
