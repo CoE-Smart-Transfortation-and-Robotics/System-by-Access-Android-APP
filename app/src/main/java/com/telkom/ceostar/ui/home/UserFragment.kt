@@ -8,8 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.telkom.ceostar.R
@@ -19,7 +21,10 @@ import com.telkom.ceostar.ui.onboard.OnboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import androidx.core.graphics.drawable.toDrawable
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.core.viewmodel.UserViewModel
+import com.telkom.ceostar.ui.recylerview.MenuUser
+import com.telkom.ceostar.ui.recylerview.MenuUserAdapter
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //private const val ARG_PARAM1 = "param1"
@@ -67,17 +72,85 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentUserBinding.bind(view)
 
-        setupClickListeners()
-//        observeProfile()
-//
-//        binding.loadingView.visibility = View.VISIBLE
-//        binding.profileImage.setBackgroundColor(android.graphics.Color.TRANSPARENT)
-//        binding.profileImage.setImageResource(0)
-//
-//        view.post {
-//            viewModel.getProfile()
-//        }
+        val menuList = listOf(
+            MenuUser(
+                title = "Ganti Kata Sandi",
+                iconLeft = R.drawable.password_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+
+                }
+            ),
+            MenuUser(
+                title = "Riwayat Transaksi",
+                iconLeft = R.drawable.list_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Benefit Member",
+                iconLeft = R.drawable.member_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Metode Pembayaran",
+                iconLeft = R.drawable.payment_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Registrasi Face Recognition",
+                iconLeft = R.drawable.face_scan_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Pusat Bantuan",
+                iconLeft = R.drawable.help_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Tentang CoEStar",
+                iconLeft = R.drawable.about_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Ganti Bahasa",
+                iconLeft = R.drawable.translation_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                }
+            ),
+            MenuUser(
+                title = "Keluar",
+                iconLeft = R.drawable.logout_icon,
+                iconRight = R.drawable.right_arrow,
+                onClick = {
+                    createExitPopUp()
+                }
+            ),
+
+        )
+
+        val menuUserAdapter = MenuUserAdapter(menuList)
+        binding.rvButtonUser.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = menuUserAdapter
+        }
+
+        observeProfile()
+        viewModel.getProfile()
     }
 
     private fun observeProfile(){
@@ -92,7 +165,6 @@ class UserFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             android.util.Log.d("UserFragment", "Loading state: $isLoading")
             if (!isLoading) {
-                binding.loadingView.visibility = View.GONE
                 binding.userName.visibility = View.VISIBLE
                 binding.additionalInfo.visibility = View.VISIBLE
                 binding.profileImage.visibility = View.VISIBLE
@@ -104,11 +176,6 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun setupClickListeners() {
-        binding.signOutButton.setOnClickListener {
-            createExitPopUp()
-        }
-    }
 
     private fun createExitPopUp() {
         popUpSignOut = Dialog(requireContext())
