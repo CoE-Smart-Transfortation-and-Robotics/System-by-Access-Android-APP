@@ -23,8 +23,10 @@ import javax.inject.Inject
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.core.viewmodel.UserViewModel
+import com.telkom.ceostar.ui.auth.ConfirmationActivity
 import com.telkom.ceostar.ui.recylerview.MenuUser
 import com.telkom.ceostar.ui.recylerview.MenuUserAdapter
+import com.telkom.ceostar.ui.user.ProfileActivity
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //private const val ARG_PARAM1 = "param1"
@@ -149,17 +151,34 @@ class UserFragment : Fragment() {
             adapter = menuUserAdapter
         }
 
+//        binding.profileButton.setOnClickListener {
+//            val goToProfile = Intent(context, ProfileActivity::class.java)
+//            goToProfile.putExtra("EXTRA_NAME", )
+//            startActivity(goToProfile)
+//        }
+
         observeProfile()
         viewModel.getProfile()
     }
 
     private fun observeProfile(){
-        android.util.Log.d("UserFragment", "Setting up observer")
 
         viewModel.profile.observe(viewLifecycleOwner) { profile ->
             android.util.Log.d("UserFragment", "Profile received: $profile")
             binding.userName.text = profile.name
-            binding.additionalInfo.text = profile.email
+            binding.additionalInfo.text = profile.nik
+
+            binding.profileButton.setOnClickListener {
+                val goToProfile = Intent(context, ProfileActivity::class.java)
+                goToProfile.putExtra("EXTRA_PROFILE", profile)
+//                goToProfile.putExtra("EXTRA_NAME", profile.name)
+//                goToProfile.putExtra("EXTRA_EMAIL", profile.email)
+//                goToProfile.putExtra("EXTRA_PHONE", profile.phone)
+//                goToProfile.putExtra("EXTRA_ADDRESS", profile.address)
+//                goToProfile.putExtra("EXTRA_NIK", profile.nik)
+                startActivity(goToProfile)
+            }
+
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -206,6 +225,12 @@ class UserFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeProfile()
+        viewModel.getProfile()
     }
 
     companion object {

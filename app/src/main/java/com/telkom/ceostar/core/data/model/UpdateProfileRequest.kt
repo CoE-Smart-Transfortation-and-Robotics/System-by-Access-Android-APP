@@ -1,10 +1,11 @@
 package com.telkom.ceostar.core.data.model
 
-
-data class UserProfile(
-    val id: Int,
+data class UpdateProfileRequest(
     val name: String,
     val email: String,
+    val password: String?,
+    val confirmPassword: String?,
+    val nik: String?,
     val phone: String?,
     val address: String?
 )

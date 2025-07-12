@@ -85,7 +85,7 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         // Redirect to MainActivity
                         val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
                     }
