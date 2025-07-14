@@ -1,5 +1,7 @@
 package com.telkom.ceostar.ui.station
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -23,6 +25,12 @@ class StationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStationBinding
     private val viewModel: StationViewModel by viewModels()
     private lateinit var stationAdapter: StationListAdapter
+
+    companion object {
+        const val EXTRA_STATION_NAME = "extra_station_name"
+        const val EXTRA_STATION_CODE = "extra_station_code"
+        const val EXTRA_TYPE = "extra_type"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +83,18 @@ class StationActivity : AppCompatActivity() {
                     stationName = station.station_name,
                     stationLocation = station.station_code
                 ) {
-                    Toast.makeText(this, "${station.station_name} clicked", Toast.LENGTH_SHORT).show()
+                    val resultIntent = Intent()
+
+                    // 2. Masukkan data yang ingin dikirim kembali
+                    resultIntent.putExtra(EXTRA_STATION_NAME, station.station_name)
+                    resultIntent.putExtra(EXTRA_STATION_CODE, station.station_code)
+                    resultIntent.putExtra(EXTRA_TYPE, intent.getStringExtra(EXTRA_TYPE))
+
+                    // 3. Atur hasilnya menjadi OK dan sertakan intent data
+                    setResult(Activity.RESULT_OK, resultIntent)
+
+                    // 4. Tutup activity ini
+                    finish()
                 }
             }
             // Perbarui data di adapter yang sudah ada

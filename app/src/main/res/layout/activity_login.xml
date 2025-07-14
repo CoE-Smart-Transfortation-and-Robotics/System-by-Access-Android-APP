@@ -82,6 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
+                    android:textColor="?attr/colorOnSurface"
                     android:hint="Masukan Email atau No. Telp Anda"
                     android:textSize="16sp"
                     android:textColorHint="@color/grey"/>

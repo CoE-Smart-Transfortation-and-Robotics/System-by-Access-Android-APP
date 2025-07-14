@@ -138,12 +138,13 @@ class ProfileActivity : AppCompatActivity() {
         binding.passwordField.error = null
         binding.passwordConfirmationField.error = null
 
+
         userViewModel.updateProfile(
             id = id,
             name = (if (name.isNotEmpty()) name else null).toString(),
             email = (if (email.isNotEmpty()) email else null).toString(),
-            password = (if (password.isNotEmpty()) password else null).toString(),
-            confirmPassword = (if (password.isNotEmpty()) confirmPassword else null).toString(),
+            password = if (password.isEmpty()) null else password,
+            confirmPassword = if (confirmPassword.isEmpty()) null else confirmPassword,
             nik = (if (nik.isNotEmpty()) nik else null).toString(),
             phone = (if (phone.isNotEmpty()) phone else null).toString(),
             address = (if (address.isNotEmpty()) address else null).toString()

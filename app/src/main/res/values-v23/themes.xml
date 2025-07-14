@@ -1,9 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.CeOStar" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorControlActivated">@color/primary_transparent</item>
+        <item name="colorOnPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/primary_transparent</item>
+        <item name="colorOnSecondary">@color/primary</item>
 
-    <style name="Theme.CeOStar" parent="Base.Theme.CeOStar">
-        <!-- Transparent system bars for edge-to-edge. -->
+        <item name="colorOnSurface">@color/black</item>
+
+        <item name="colorOnSurfaceVariant">@color/darkGrey</item>
+
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
-    </style>
+        <item name="android:windowLightStatusBar">true</item> </style>
+
+    <style name="Theme.CeOStar" parent="Base.Theme.CeOStar" />
+
+    <style name="CeOStar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="CeOStar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -150,6 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
+                    android:textColorHint="@color/grey"
                     android:hint="Masukan Email atau No. Telp Anda"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -175,7 +176,7 @@
                 app:boxStrokeColor="@color/black"
                 app:cursorColor="@color/black"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_field"
@@ -206,7 +207,7 @@
                 app:boxStrokeColor="@color/black"
                 app:cursorColor="@color/black"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_confirmation_field"

@@ -74,6 +74,8 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/white"
+        app:strokeWidth="0.5dp"
+        app:strokeColor="@color/darkGrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,10 +155,11 @@
                     android:textColor="@color/darkGrey" />
 
                 <TextView
+                    android:id="@+id/departure_date_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:text="Dari"
+                    android:text="Tanggal Pergi"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

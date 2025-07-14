@@ -58,8 +58,6 @@ class RegisterActivity : AppCompatActivity() {
                         binding.buttonRegister.text = "DAFTAR"
                         Toast.makeText(this@RegisterActivity, "Registrasi berhasil!", Toast.LENGTH_SHORT).show()
 
-                        // Redirect to MainActivity
-                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                         finish()
                     }
                     is Resource.Error -> {

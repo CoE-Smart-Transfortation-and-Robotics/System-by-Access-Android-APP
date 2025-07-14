@@ -9,7 +9,8 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/train_card"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        app:strokeWidth="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"

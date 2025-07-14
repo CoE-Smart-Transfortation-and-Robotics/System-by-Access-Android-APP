@@ -2,8 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CeOStar" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorControlActivated">@color/black</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorControlActivated">@color/primary_transparent</item>
+        <item name="colorOnPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/primary_transparent</item>
+        <item name="colorOnSecondary">@color/primary</item>
+
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurfaceVariant">@color/darkGrey</item>
 
 
 <!--        <item name="android:statusBarColor">@color/black</item>-->

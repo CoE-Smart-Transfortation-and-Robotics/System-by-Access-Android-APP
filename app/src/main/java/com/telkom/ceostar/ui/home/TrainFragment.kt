@@ -40,6 +40,7 @@ class TrainFragment : Fragment() {
                 trainImage = R.drawable.antar_kota,
                 onClick = {
                     val goToType = Intent(context, TrainTypeActivity::class.java)
+                    goToType.putExtra("EXTRA_TYPE", "Antar Kota")
                     startActivity(goToType)
                 }
             ),
@@ -47,24 +48,36 @@ class TrainFragment : Fragment() {
                 title = "LRT",
                 trainImage = R.drawable.lrt,
                 onClick = {
+                    val goToType = Intent(context, TrainTypeActivity::class.java)
+                    goToType.putExtra("EXTRA_TYPE", "LRT")
+                    startActivity(goToType)
                 }
             ),
             TrainType(
                 title = "Lokal",
                 trainImage = R.drawable.lokal,
                 onClick = {
+                    val goToType = Intent(context, TrainTypeActivity::class.java)
+                    goToType.putExtra("EXTRA_TYPE", "Lokal")
+                    startActivity(goToType)
                 }
             ),
             TrainType(
                 title = "Commuter Line",
                 trainImage = R.drawable.commuter,
                 onClick = {
+                    val goToType = Intent(context, TrainTypeActivity::class.java)
+                    goToType.putExtra("EXTRA_TYPE", "Commuter Line")
+                    startActivity(goToType)
                 }
             ),
             TrainType(
                 title = "Whoosh",
                 trainImage = R.drawable.whoosh,
                 onClick = {
+                    val goToType = Intent(context, TrainTypeActivity::class.java)
+                    goToType.putExtra("EXTRA_TYPE", "Whoosh")
+                    startActivity(goToType)
                 }
             )
         )

@@ -160,11 +160,6 @@ class UserFragment : Fragment() {
             binding.profileButton.setOnClickListener {
                 val goToProfile = Intent(context, ProfileActivity::class.java)
                 goToProfile.putExtra("EXTRA_PROFILE", profile)
-//                goToProfile.putExtra("EXTRA_NAME", profile.name)
-//                goToProfile.putExtra("EXTRA_EMAIL", profile.email)
-//                goToProfile.putExtra("EXTRA_PHONE", profile.phone)
-//                goToProfile.putExtra("EXTRA_ADDRESS", profile.address)
-//                goToProfile.putExtra("EXTRA_NIK", profile.nik)
                 startActivity(goToProfile)
             }
 
@@ -226,22 +221,4 @@ class UserFragment : Fragment() {
         fun newInstance() = UserFragment()
     }
 
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment UserFragment.
-//         */
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            UserFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 }

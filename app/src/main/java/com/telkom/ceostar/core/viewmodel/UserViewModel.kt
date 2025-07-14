@@ -47,7 +47,7 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun updateProfile(id: Int, name: String, email: String, password: String, confirmPassword: String, nik: String?, phone: String?, address: String?) {
+    fun updateProfile(id: Int, name: String, email: String, password: String?, confirmPassword: String?, nik: String?, phone: String?, address: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.updateProfile(id, name, email, password, confirmPassword, nik, phone, address).collect {
                 _updateState.value = it
