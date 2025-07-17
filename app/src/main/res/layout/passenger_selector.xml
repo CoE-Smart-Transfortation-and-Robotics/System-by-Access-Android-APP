@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Penumpang"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Dewasa -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Dewasa"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+        <ImageButton
+            android:id="@+id/btn_adult_minus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/minus_icon"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <TextView
+            android:id="@+id/tv_adult_count"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center" />
+
+        <ImageButton
+            android:id="@+id/btn_adult_plus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/add_icon"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+    </LinearLayout>
+
+    <!-- Anak -->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:layout_marginBottom="16dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Anak (3-11 tahun)"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@color/black" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_child_minus"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/minus_icon"-->
+<!--            android:background="?attr/selectableItemBackgroundBorderless" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_child_count"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="0"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:gravity="center" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_child_plus"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/add_icon"-->
+<!--            android:background="?attr/selectableItemBackgroundBorderless" />-->
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

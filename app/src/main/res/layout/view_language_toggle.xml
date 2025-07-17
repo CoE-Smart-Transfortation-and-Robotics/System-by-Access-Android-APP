@@ -10,7 +10,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:layout_marginBottom="4dp"
         android:background="?attr/selectableItemBackground">
 
         <ImageView
@@ -28,11 +31,10 @@
             android:text="Ganti Kata Sandi"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/icon_right"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/right_arrow" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/language_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

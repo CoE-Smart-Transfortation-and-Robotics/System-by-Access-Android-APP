@@ -192,7 +192,6 @@
             </LinearLayout>
 
             <LinearLayout
-
                 android:id="@+id/passenger_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,6 +207,7 @@
                     android:textColor="@color/darkGrey" />
 
                 <TextView
+                    android:id="@+id/passenger_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -218,7 +218,7 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonRegister"
+                android:id="@+id/button_ticket_search"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"

@@ -26,17 +26,9 @@ import com.telkom.ceostar.core.viewmodel.UserViewModel
 import com.telkom.ceostar.ui.auth.ConfirmationActivity
 import com.telkom.ceostar.ui.recylerview.MenuUser
 import com.telkom.ceostar.ui.recylerview.MenuUserAdapter
+import com.telkom.ceostar.ui.recylerview.ViewType
+import com.telkom.ceostar.ui.user.AboutActivity
 import com.telkom.ceostar.ui.user.ProfileActivity
-
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 
 @AndroidEntryPoint
 class UserFragment : Fragment() {
@@ -67,64 +59,56 @@ class UserFragment : Fragment() {
 
         val menuList = listOf(
             MenuUser(
-                title = "Ganti Kata Sandi",
-                iconLeft = R.drawable.password_icon,
-                iconRight = R.drawable.right_arrow,
-                onClick = {
-
-                }
-            ),
-            MenuUser(
-                title = "Riwayat Transaksi",
+                title = getString(R.string.transaction),
                 iconLeft = R.drawable.list_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
                 }
             ),
             MenuUser(
-                title = "Benefit Member",
+                title = getString(R.string.member_benefit),
                 iconLeft = R.drawable.member_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
                 }
             ),
             MenuUser(
-                title = "Metode Pembayaran",
+                title = getString(R.string.payment_method),
                 iconLeft = R.drawable.payment_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
                 }
             ),
             MenuUser(
-                title = "Registrasi Face Recognition",
+                title = getString(R.string.face_recognition),
                 iconLeft = R.drawable.face_scan_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
                 }
             ),
             MenuUser(
-                title = "Pusat Bantuan",
+                title = getString(R.string.help_center),
                 iconLeft = R.drawable.help_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
                 }
             ),
             MenuUser(
-                title = "Tentang CoEStar",
+                title = getString(R.string.about),
                 iconLeft = R.drawable.about_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
+                    val intent = Intent(context, AboutActivity::class.java)
+                    startActivity(intent)
                 }
             ),
+//            MenuUser(
+//                title = getString(R.string.change_language),
+//                iconLeft = R.drawable.translation_icon,
+//                viewType = ViewType.LANGUAGE_TOGGLE
+//            ),
             MenuUser(
-                title = "Ganti Bahasa",
-                iconLeft = R.drawable.translation_icon,
-                iconRight = R.drawable.right_arrow,
-                onClick = {
-                }
-            ),
-            MenuUser(
-                title = "Keluar",
+                title = getString(R.string.logout),
                 iconLeft = R.drawable.logout_icon,
                 iconRight = R.drawable.right_arrow,
                 onClick = {
@@ -134,11 +118,31 @@ class UserFragment : Fragment() {
 
         )
 
-        val menuUserAdapter = MenuUserAdapter(menuList)
+        val menuAdapter = MenuUserAdapter(menuList) {
+            // Panggil recreate dari Activity yang menaungi fragment ini
+            requireActivity().recreate()
+        }
+
+        // 2. HAPUS instance adapter kedua yang duplikat
+        // val menuUserAdapter = MenuUserAdapter(menuList) <-- Hapus baris ini
+
+        // 3. Set adapter yang benar ke RecyclerView
         binding.rvButtonUser.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = menuUserAdapter
+            adapter = menuAdapter // Gunakan 'menuAdapter' yang sudah punya callback
         }
+
+
+//        val menuAdapter = MenuUserAdapter(menuList) {
+//            // Aksi ini akan dipanggil saat toggle bahasa diubah
+//            recreate() // Method bawaan Activity untuk menggambar ulang dirinya
+//        }
+//
+//        val menuUserAdapter = MenuUserAdapter(menuList)
+//        binding.rvButtonUser.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = menuUserAdapter
+//        }
 
 //        binding.profileButton.setOnClickListener {
 //            val goToProfile = Intent(context, ProfileActivity::class.java)

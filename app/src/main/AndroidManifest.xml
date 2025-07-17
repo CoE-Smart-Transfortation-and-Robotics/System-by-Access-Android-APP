@@ -17,6 +17,12 @@
         android:theme="@style/Theme.CeOStar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.user.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.train.TrainScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.station.StationActivity"
             android:exported="false" />
         <activity
