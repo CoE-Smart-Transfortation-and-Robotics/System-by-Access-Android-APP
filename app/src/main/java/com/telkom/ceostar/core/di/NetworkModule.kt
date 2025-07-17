@@ -1,7 +1,9 @@
 package com.telkom.ceostar.core.di
 
 import com.telkom.ceostar.core.network.ApiService
+import com.telkom.ceostar.core.network.AuthInterceptor
 import com.telkom.ceostar.core.utils.Constants
+import com.telkom.ceostar.core.utils.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,8 +29,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideAuthInterceptor(sessionManager: SessionManager): AuthInterceptor {
+        return AuthInterceptor(sessionManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor, authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

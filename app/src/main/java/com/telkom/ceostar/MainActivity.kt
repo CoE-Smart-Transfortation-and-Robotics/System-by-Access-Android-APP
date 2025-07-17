@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -53,6 +54,12 @@ class MainActivity : AppCompatActivity() {
             finish() // Tutup MainActivity (splash screen)
         }, 3000) // 3 detik delay
 
+    }
+
+    private fun showServerDownView() {
+        binding.splashImage.visibility = View.GONE
+        val serverDown = findViewById<View>(R.id.server_down_view)
+        serverDown.visibility = View.VISIBLE
     }
 
 

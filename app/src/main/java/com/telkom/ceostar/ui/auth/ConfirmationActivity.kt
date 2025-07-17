@@ -68,9 +68,15 @@ class ConfirmationActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
 
-                        val token = resource.data?.token
-                        if (token != null){
-                            sessionManager.saveAuthToken(token)
+                        val responseData = resource.data
+                        val token = responseData?.token
+                        // Asumsi respons Anda memiliki field 'expires_in' dalam detik.
+                        // Ganti 3600L dengan nilai default yang sesuai jika perlu.
+                        val expiresIn = 604800L
+
+                        if (token != null) {
+                            // Simpan token beserta waktu kedaluwarsanya
+                            sessionManager.saveAuthToken(token, expiresIn)
                         }
 
                         binding.buttonLogin.isEnabled = true
@@ -78,7 +84,9 @@ class ConfirmationActivity : AppCompatActivity() {
                         Toast.makeText(this@ConfirmationActivity, "Login berhasil!", Toast.LENGTH_SHORT).show()
 
                         // Redirect to MainActivity
-                        startActivity(Intent(this@ConfirmationActivity, HomeActivity::class.java))
+                        val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                         finish()
                     }
                     is Resource.Error -> {

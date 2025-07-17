@@ -108,7 +108,7 @@
                     app:cursorColor="@color/black"
                     app:hintEnabled="false"
                     app:hintTextColor="@color/darkGrey"
-                    app:passwordToggleEnabled="true">
+                    app:endIconMode="password_toggle">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_field"
