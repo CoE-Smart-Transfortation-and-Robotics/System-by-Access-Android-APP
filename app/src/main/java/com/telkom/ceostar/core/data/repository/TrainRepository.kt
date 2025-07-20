@@ -10,6 +10,7 @@ class TrainRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getTrainSchedules(
         originStationId: Int,
         destinationStationId: Int,
-        scheduleDate: String
-    ) = apiService.getTrainSchedules(originStationId, destinationStationId, scheduleDate)
+        scheduleDate: String,
+        trainType: Int
+    ) = apiService.getTrainSchedules(trainType, originStationId, destinationStationId, scheduleDate)
 }

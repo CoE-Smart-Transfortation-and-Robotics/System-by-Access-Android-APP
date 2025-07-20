@@ -19,7 +19,10 @@ data class ScheduleData(
     @SerializedName("timing")
     val timing: TimingInfo,
     @SerializedName("seat_classes")
-    val seatClasses: SeatClasses
+    val seatClasses: SeatClasses,
+    @SerializedName("pricing")
+    val pricing: Pricing,
+    val onClick: (() -> Unit)? = null
 )
 
 data class TrainInfo(
@@ -52,6 +55,16 @@ data class TimingInfo(
 )
 
 data class SeatClasses(
+    @SerializedName("Bisnis")
+    val bisnis: Int,
+    @SerializedName("Ekonomi")
+    val ekonomi: Int,
+    @SerializedName("Eksekutif")
+    val eksekutif: Int
+)
+
+// Buat data class baru untuk pricing
+data class Pricing(
     @SerializedName("Bisnis")
     val bisnis: Int,
     @SerializedName("Ekonomi")

@@ -27,7 +27,8 @@ class ScheduleViewModel @Inject constructor(
     fun fetchTrainSchedules(
         originStationId: Int,
         destinationStationId: Int,
-        scheduleDate: String
+        scheduleDate: String,
+        trainType: Int // Tambahkan parameter ini
     ) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -35,7 +36,8 @@ class ScheduleViewModel @Inject constructor(
                 val response = trainRepository.getTrainSchedules(
                     originStationId,
                     destinationStationId,
-                    scheduleDate
+                    scheduleDate,
+                    trainType // Teruskan parameter
                 )
                 if (response.isSuccessful) {
                     _schedules.postValue(response.body())

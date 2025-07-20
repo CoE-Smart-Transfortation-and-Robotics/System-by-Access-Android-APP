@@ -32,6 +32,7 @@ class TrainTypeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrainTypeBinding
 
     private var trainType: String = ""
+    private var trainId: Int = 0
 
     private var adultCount = 0
 
@@ -53,6 +54,8 @@ class TrainTypeActivity : AppCompatActivity() {
 
         val type = intent.getStringExtra("EXTRA_TYPE")
         trainType = type.toString()
+        val typeId = intent.getIntExtra("EXTRA_TYPE_ID", 0)
+        trainId = typeId
 
         binding.trainTypeText.text = trainType
 
@@ -126,6 +129,7 @@ class TrainTypeActivity : AppCompatActivity() {
                 intent.putExtra("EXTRA_DESTINATION", destinationStation)
                 intent.putExtra("EXTRA_DATE", departureDate)
                 intent.putExtra("EXTRA_TRAIN_TYPE", trainType)
+                intent.putExtra("EXTRA_TRAIN_ID", trainId)
                 intent.putExtra("EXTRA_ADULT_COUNT", adultCount)
                 intent.putExtra("EXTRA_ORIGIN_ID", binding.originStationId.text.toString().toInt())
                 intent.putExtra("EXTRA_DESTINATION_ID", binding.destinationStationId.text.toString().toInt())

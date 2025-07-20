@@ -47,6 +47,7 @@ interface ApiService {
 
     @GET("/api/bookings/schedules")
     suspend fun getTrainSchedules(
+        @Query("train_category") trainType: Int,
         @Query("origin_station_id") originStationId: Int,
         @Query("destination_station_id") destinationStationId: Int,
         @Query("schedule_date") scheduleDate: String
