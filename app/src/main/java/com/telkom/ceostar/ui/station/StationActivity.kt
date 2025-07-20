@@ -29,6 +29,7 @@ class StationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_STATION_NAME = "extra_station_name"
         const val EXTRA_STATION_CODE = "extra_station_code"
+        const val EXTRA_STATION_ID = "extra_station_id"
         const val EXTRA_TYPE = "extra_type"
     }
 
@@ -88,6 +89,7 @@ class StationActivity : AppCompatActivity() {
                     // 2. Masukkan data yang ingin dikirim kembali
                     resultIntent.putExtra(EXTRA_STATION_NAME, station.station_name)
                     resultIntent.putExtra(EXTRA_STATION_CODE, station.station_code)
+                    resultIntent.putExtra(EXTRA_STATION_ID, station.id)
                     resultIntent.putExtra(EXTRA_TYPE, intent.getStringExtra(EXTRA_TYPE))
 
                     // 3. Atur hasilnya menjadi OK dan sertakan intent data

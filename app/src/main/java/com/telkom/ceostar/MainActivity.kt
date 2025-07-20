@@ -2,11 +2,8 @@ package com.telkom.ceostar
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private val authViewModel: AuthViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,18 +41,44 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            // Cek apakah token ada
-            if (sessionManager.fetchAuthToken() != null) {
-                // Jika ada, langsung ke HomeActivity
-                startActivity(Intent(this, HomeActivity::class.java))
-            } else {
-                // Jika tidak ada, ke OnboardActivity
-                startActivity(Intent(this, OnboardActivity::class.java))
-            }
-            finish() // Tutup MainActivity (splash screen)
-        }, 3000) // 3 detik delay
+        observeConnection()
+        authViewModel.testConnection()
+    }
 
+    private fun observeConnection() {
+        lifecycleScope.launch {
+            authViewModel.connectionState.collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        // Connection successful, proceed with session check
+                        navigateToNextScreen()
+                    }
+                    is Resource.Error -> {
+                        // Connection failed, show error view
+                        showServerDownView()
+                        Toast.makeText(this@MainActivity, resource.message, Toast.LENGTH_LONG).show()
+                    }
+                    is Resource.Loading -> {
+                        // Show loading state, splash screen is already visible
+                    }
+                    null -> {
+                        // Initial state
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToNextScreen() {
+        // Cek apakah token ada
+        if (sessionManager.fetchAuthToken() != null) {
+            // Jika ada, langsung ke HomeActivity
+            startActivity(Intent(this, HomeActivity::class.java))
+        } else {
+            // Jika tidak ada, ke OnboardActivity
+            startActivity(Intent(this, OnboardActivity::class.java))
+        }
+        finish() // Tutup MainActivity (splash screen)
     }
 
     private fun showServerDownView() {
@@ -61,6 +86,4 @@ class MainActivity : AppCompatActivity() {
         val serverDown = findViewById<View>(R.id.server_down_view)
         serverDown.visibility = View.VISIBLE
     }
-
-
 }

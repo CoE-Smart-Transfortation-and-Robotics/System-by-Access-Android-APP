@@ -3,6 +3,7 @@ package com.telkom.ceostar.core.network
 import com.telkom.ceostar.core.data.model.AuthResponse
 import com.telkom.ceostar.core.data.model.LoginRequest
 import com.telkom.ceostar.core.data.model.RegisterRequest
+import com.telkom.ceostar.core.data.model.ScheduleResponse
 import com.telkom.ceostar.core.data.model.Station
 import com.telkom.ceostar.core.data.model.Trains
 import com.telkom.ceostar.core.data.model.UpdateProfileRequest
@@ -16,6 +17,7 @@ import retrofit2.http.HEAD
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -42,5 +44,12 @@ interface ApiService {
 
     @GET("/api/trains")
     suspend fun getAllTrains(): Response<Trains>
+
+    @GET("/api/bookings/schedules")
+    suspend fun getTrainSchedules(
+        @Query("origin_station_id") originStationId: Int,
+        @Query("destination_station_id") destinationStationId: Int,
+        @Query("schedule_date") scheduleDate: String
+    ): Response<ScheduleResponse>
 
 }

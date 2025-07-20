@@ -111,6 +111,16 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                <TextView
+                    android:id="@+id/origin_station_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    android:text="Dari"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -133,6 +143,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
+                    android:text="Dari"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/destination_station_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
                     android:text="Dari"
                     android:textColor="@color/black"
                     android:textSize="18sp" />

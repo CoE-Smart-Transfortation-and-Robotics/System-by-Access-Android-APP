@@ -2,17 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/server_down_view"
+    android:id="@+id/empty_view"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/empty_anim"
+        android:id="@+id/empty"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="server_down.json"
+        app:lottie_fileName="empty_box.json"
         app:lottie_loop="true"/>
 
 </RelativeLayout>

@@ -34,7 +34,6 @@ class TrainTypeActivity : AppCompatActivity() {
     private var trainType: String = ""
 
     private var adultCount = 0
-    private var childCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +127,8 @@ class TrainTypeActivity : AppCompatActivity() {
                 intent.putExtra("EXTRA_DATE", departureDate)
                 intent.putExtra("EXTRA_TRAIN_TYPE", trainType)
                 intent.putExtra("EXTRA_ADULT_COUNT", adultCount)
+                intent.putExtra("EXTRA_ORIGIN_ID", binding.originStationId.text.toString().toInt())
+                intent.putExtra("EXTRA_DESTINATION_ID", binding.destinationStationId.text.toString().toInt())
                 startActivity(intent)
             }
         }
@@ -185,12 +186,15 @@ class TrainTypeActivity : AppCompatActivity() {
             val data: Intent? = result.data
             val stationName = data?.getStringExtra(StationActivity.EXTRA_STATION_NAME)
             val stationCode = data?.getStringExtra(StationActivity.EXTRA_STATION_CODE)
+            val stationId = data?.getIntExtra(StationActivity.EXTRA_STATION_ID, 0)
             val type = data?.getStringExtra(StationActivity.EXTRA_TYPE)
 
             if (type.equals("origin")) {
                 binding.originStation.text = stationName + " (" + stationCode + ")"
+                binding.originStationId.text = stationId.toString()
             } else if (type.equals("destination")) {
                 binding.destinationStation.text = stationName + " (" + stationCode + ")"
+                binding.destinationStationId.text = stationId.toString()
             }
         }
     }
