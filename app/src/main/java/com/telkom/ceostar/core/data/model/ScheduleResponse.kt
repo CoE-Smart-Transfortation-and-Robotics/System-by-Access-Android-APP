@@ -1,6 +1,9 @@
 package com.telkom.ceostar.core.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 data class ScheduleResponse(
     @SerializedName("message")
@@ -9,6 +12,7 @@ data class ScheduleResponse(
     val data: List<ScheduleData>
 )
 
+@Parcelize
 data class ScheduleData(
     @SerializedName("schedule_id")
     val scheduleId: Int,
@@ -22,9 +26,12 @@ data class ScheduleData(
     val seatClasses: SeatClasses,
     @SerializedName("pricing")
     val pricing: Pricing,
+): Parcelable {
+    @IgnoredOnParcel
     val onClick: (() -> Unit)? = null
-)
+}
 
+@Parcelize
 data class TrainInfo(
     @SerializedName("train_id")
     val trainId: Int,
@@ -34,8 +41,9 @@ data class TrainInfo(
     val trainCode: String,
     @SerializedName("category")
     val category: String
-)
+) : Parcelable
 
+@Parcelize
 data class RouteInfo(
     @SerializedName("origin_station")
     val originStation: String,
@@ -43,8 +51,9 @@ data class RouteInfo(
     val destinationStation: String,
     @SerializedName("distance")
     val distance: Int
-)
+) : Parcelable
 
+@Parcelize
 data class TimingInfo(
     @SerializedName("schedule_date")
     val scheduleDate: String,
@@ -52,8 +61,9 @@ data class TimingInfo(
     val departureTime: String,
     @SerializedName("arrival_time")
     val arrivalTime: String
-)
+) : Parcelable
 
+@Parcelize
 data class SeatClasses(
     @SerializedName("Bisnis")
     val bisnis: Int,
@@ -61,9 +71,9 @@ data class SeatClasses(
     val ekonomi: Int,
     @SerializedName("Eksekutif")
     val eksekutif: Int
-)
+) : Parcelable
 
-// Buat data class baru untuk pricing
+@Parcelize
 data class Pricing(
     @SerializedName("Bisnis")
     val bisnis: Int,
@@ -71,4 +81,4 @@ data class Pricing(
     val ekonomi: Int,
     @SerializedName("Eksekutif")
     val eksekutif: Int
-)
+) : Parcelable

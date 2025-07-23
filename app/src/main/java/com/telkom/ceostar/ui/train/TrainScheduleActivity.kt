@@ -48,6 +48,7 @@ class TrainScheduleActivity : AppCompatActivity() {
         val originStationId = intent.getIntExtra("EXTRA_ORIGIN_ID", -1)
         val destinationStationId = intent.getIntExtra("EXTRA_DESTINATION_ID", -1)
         val trainTypeId = intent.getIntExtra("EXTRA_TRAIN_ID", -1)
+        val totalPassenger = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
 
         binding.destinationText.text = "$originStation > $destinationStation"
 
@@ -69,8 +70,9 @@ class TrainScheduleActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+        val totalPassenger = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
         // Perbaiki inisialisasi adapter dengan trainType
-        scheduleAdapter = TrainScheduleAdapter(trainType)
+        scheduleAdapter = TrainScheduleAdapter(trainType, totalPassenger)
         binding.rvSchedule.apply {
             layoutManager = LinearLayoutManager(this@TrainScheduleActivity)
             adapter = scheduleAdapter
@@ -91,7 +93,7 @@ class TrainScheduleActivity : AppCompatActivity() {
         }
 
         scheduleViewModel.isLoading.observe(this) { isLoading ->
-//            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         scheduleViewModel.errorMessage.observe(this) { errorMessage ->

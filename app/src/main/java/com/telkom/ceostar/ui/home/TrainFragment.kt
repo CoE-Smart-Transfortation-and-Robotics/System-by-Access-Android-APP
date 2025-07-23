@@ -37,40 +37,40 @@ class TrainFragment : Fragment() {
         val trainType = listOf(
             TrainType(
                 title = "Antar Kota",
-//                trainImage = R.drawable.antar_kota,
-                trainImage = R.drawable.train_icon,
+                trainImage = R.drawable.antar_kota,
+//                trainImage = R.drawable.train_icon,
                 onClick = {
                     goToTrainType("Antar Kota", 1)
                 }
             ),
             TrainType(
                 title = "LRT",
-//                trainImage = R.drawable.lrt,
-                trainImage = R.drawable.train_icon,
+                trainImage = R.drawable.lrt,
+//                trainImage = R.drawable.train_icon,
                 onClick = {
                     goToTrainType("Antar Kota", 1)
                 }
             ),
             TrainType(
                 title = "Lokal",
-//                trainImage = R.drawable.lokal,
-                trainImage = R.drawable.train_icon,
+                trainImage = R.drawable.lokal,
+//                trainImage = R.drawable.train_icon,
                 onClick = {
                     goToTrainType("Antar Kota", 1)
                 }
             ),
             TrainType(
                 title = "Commuter Line",
-//                trainImage = R.drawable.commuter,
-                trainImage = R.drawable.train_icon,
+                trainImage = R.drawable.commuter,
+//                trainImage = R.drawable.train_icon,
                 onClick = {
                     goToTrainType("Antar Kota", 1)
                 }
             ),
             TrainType(
                 title = "Whoosh",
-//                trainImage = R.drawable.whoosh,
-                trainImage = R.drawable.train_icon,
+                trainImage = R.drawable.whoosh,
+//                trainImage = R.drawable.train_icon,
                 onClick = {
                     goToTrainType("Antar Kota", 1)
                 }
