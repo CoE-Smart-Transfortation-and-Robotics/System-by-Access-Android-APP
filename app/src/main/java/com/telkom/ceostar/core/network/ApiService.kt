@@ -4,6 +4,7 @@ import com.telkom.ceostar.core.data.model.AuthResponse
 import com.telkom.ceostar.core.data.model.LoginRequest
 import com.telkom.ceostar.core.data.model.RegisterRequest
 import com.telkom.ceostar.core.data.model.ScheduleResponse
+import com.telkom.ceostar.core.data.model.Seat
 import com.telkom.ceostar.core.data.model.Station
 import com.telkom.ceostar.core.data.model.Trains
 import com.telkom.ceostar.core.data.model.UpdateProfileRequest
@@ -52,5 +53,13 @@ interface ApiService {
         @Query("destination_station_id") destinationStationId: Int,
         @Query("schedule_date") scheduleDate: String
     ): Response<ScheduleResponse>
+
+    @GET("/api/bookings/available-seats")
+    suspend fun getAvailableSeats(
+        @Query("train_id") trainId: Int,
+        @Query("schedule_date") scheduleDate: String,
+        @Query("origin_station_id") originStationId: Int,
+        @Query("destination_station_id") destinationStationId: Int,
+    ): Response<List<Seat>>
 
 }

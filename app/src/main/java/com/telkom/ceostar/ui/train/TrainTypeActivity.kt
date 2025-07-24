@@ -120,7 +120,7 @@ class TrainTypeActivity : AppCompatActivity() {
             val departureDate = binding.departureDateText.text.toString()
             val adultCount = this.adultCount
 
-            if (originStation.isEmpty() || destinationStation.isEmpty() || departureDate.isEmpty()) {
+            if (originStation.equals("Dari") || destinationStation.equals("Dari") || departureDate.equals("Tanggal Pergi") || adultCount == 0) {
                 Toast.makeText(this, "Silakan lengkapi semua informasi", Toast.LENGTH_SHORT).show()
             } else {
                 // Lanjutkan ke TrainScheduleActivity dengan data yang diperlukan

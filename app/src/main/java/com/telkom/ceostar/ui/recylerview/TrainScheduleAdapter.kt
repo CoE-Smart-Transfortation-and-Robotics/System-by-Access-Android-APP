@@ -17,7 +17,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class TrainScheduleAdapter(private val trainType: String?, private val totalPassenger: Int) : ListAdapter<ScheduleData, TrainScheduleAdapter.ScheduleViewHolder>(DIFF_CALLBACK) {
+class TrainScheduleAdapter(private val trainType: String?, private val totalPassenger: Int, private val originStationId : Int, private val destinationStationId : Int) : ListAdapter<ScheduleData, TrainScheduleAdapter.ScheduleViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         val binding = ViewTrainScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,11 +27,11 @@ class TrainScheduleAdapter(private val trainType: String?, private val totalPass
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val schedule = getItem(position)
         // Kirim trainType ke ViewHolder
-        holder.bind(schedule, trainType, totalPassenger)
+        holder.bind(schedule, trainType, totalPassenger, originStationId, destinationStationId)
     }
 
     class ScheduleViewHolder(private val binding: ViewTrainScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(schedule: ScheduleData, trainType: String?, totalPassenger: Int) {
+        fun bind(schedule: ScheduleData, trainType: String?, totalPassenger: Int, originStationId : Int, destinationStationId : Int) {
             binding.apply {
                 trainName.text = "${schedule.train.trainName} (${schedule.train.trainCode})"
                 departureTime.text = schedule.timing.departureTime.substring(0, 5)
@@ -104,6 +104,8 @@ class TrainScheduleAdapter(private val trainType: String?, private val totalPass
                         putExtra("EXTRA_DATA_SCHEDULE", schedule)
                         putExtra("EXTRA_TRAIN_CLASS", "EKONOMI")
                         putExtra("EXTRA_PASSENGER", totalPassenger)
+                        putExtra("EXTRA_ORIGIN_ID", originStationId)
+                        putExtra("EXTRA_DESTINATION_ID", destinationStationId)
                     }
                     context.startActivity(intent)
 
@@ -115,6 +117,9 @@ class TrainScheduleAdapter(private val trainType: String?, private val totalPass
                         putExtra("EXTRA_DATA_SCHEDULE", schedule)
                         putExtra("EXTRA_TRAIN_CLASS", "BISNIS")
                         putExtra("EXTRA_PASSENGER", totalPassenger)
+                        putExtra("EXTRA_ORIGIN_ID", originStationId)
+                        putExtra("EXTRA_DESTINATION_ID", destinationStationId)
+
                     }
                     context.startActivity(intent)
                 }
@@ -125,6 +130,8 @@ class TrainScheduleAdapter(private val trainType: String?, private val totalPass
                         putExtra("EXTRA_DATA_SCHEDULE", schedule)
                         putExtra("EXTRA_TRAIN_CLASS", "EKSEKUTIF")
                         putExtra("EXTRA_PASSENGER", totalPassenger)
+                        putExtra("EXTRA_ORIGIN_ID", originStationId)
+                        putExtra("EXTRA_DESTINATION_ID", destinationStationId)
                     }
                     context.startActivity(intent)
                 }

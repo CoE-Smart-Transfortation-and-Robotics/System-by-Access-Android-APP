@@ -32,6 +32,13 @@ class BookingActivity : AppCompatActivity() {
 
     private val passengerList = mutableListOf<PassengerInfo>()
 
+    private var trainClass: String? = null
+    private var trainData: ScheduleData? = null
+    private var totalPassenger: Int = 0
+    private var originStationId: Int = 0
+    private var destinationStationId: Int = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,9 +55,12 @@ class BookingActivity : AppCompatActivity() {
             insets
         }
 
-        val trainClass = intent.getStringExtra("EXTRA_TRAIN_CLASS")
-        val trainData = intent.getParcelableExtra<ScheduleData>("EXTRA_DATA_SCHEDULE")
-        val totalPassenger = intent.getIntExtra("EXTRA_PASSENGER", 0)
+        originStationId = intent.getIntExtra("EXTRA_ORIGIN_ID", -1)
+        destinationStationId = intent.getIntExtra("EXTRA_DESTINATION_ID", -1)
+
+        trainClass = intent.getStringExtra("EXTRA_TRAIN_CLASS")
+        trainData = intent.getParcelableExtra<ScheduleData>("EXTRA_DATA_SCHEDULE")
+        totalPassenger = intent.getIntExtra("EXTRA_PASSENGER", 0)
         binding.originStation.text = trainData?.route?.originStation
         binding.destinationStation.text = trainData?.route?.destinationStation
         binding.departureDate.text = trainData?.timing?.scheduleDate + " ~ " + trainData?.timing?.departureTime?.substring(0, 5) + " - " + trainData?.timing?.arrivalTime?.substring(0, 5)
@@ -61,7 +71,7 @@ class BookingActivity : AppCompatActivity() {
         initializePassengerList(totalPassenger)
 
         setupPassengerViews(totalPassenger)
-        setupOnClickListeners()
+        setupOnClickListeners(totalPassenger)
         observeProfile()
         viewModel.getProfile()
     }
@@ -93,7 +103,7 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupOnClickListeners() {
+    private fun setupOnClickListeners(totalPassanger : Int) {
         binding.buttonBack.setOnClickListener {
             finish()
         }
@@ -117,19 +127,16 @@ class BookingActivity : AppCompatActivity() {
         binding.buttonBooking.setOnClickListener {
             // Validasi semua passenger sudah diisi
             if (validateAllPassengers()) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, ChooseChairActivity::class.java)
 
                 // Kirim data passenger sebagai ArrayList
                 intent.putParcelableArrayListExtra("EXTRA_PASSENGER_LIST", ArrayList(passengerList))
 
-                // Kirim data lain yang diperlukan
-                val trainClass = intent.getStringExtra("EXTRA_TRAIN_CLASS")
-                val trainData = intent.getParcelableExtra<ScheduleData>("EXTRA_DATA_SCHEDULE")
-                val totalPassenger = intent.getIntExtra("EXTRA_PASSENGER", 0)
-
                 intent.putExtra("EXTRA_TRAIN_CLASS", trainClass)
                 intent.putExtra("EXTRA_DATA_SCHEDULE", trainData)
-                intent.putExtra("EXTRA_PASSENGER", totalPassenger)
+                intent.putExtra("EXTRA_PASSENGER", totalPassanger)
+                intent.putExtra("EXTRA_ORIGIN_ID", originStationId)
+                intent.putExtra("EXTRA_DESTINATION_ID", destinationStationId)
 
                 startActivity(intent)
             } else {
