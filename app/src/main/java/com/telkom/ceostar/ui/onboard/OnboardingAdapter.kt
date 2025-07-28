@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.telkom.ceostar.R
 
-class OnboardingAdapter(private val items: List<OnboardingItem>, private val onButtonClick: () -> Unit, private val onSecondaryClick: () -> Unit) : RecyclerView.Adapter<OnboardingAdapter.OnBoardingViewHolder>() {
+class OnboardingAdapter(private val items: List<OnboardingItem>, private val onButtonClick: () -> Unit) : RecyclerView.Adapter<OnboardingAdapter.OnBoardingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoardingViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_onboarding, parent, false)
@@ -26,13 +26,8 @@ class OnboardingAdapter(private val items: List<OnboardingItem>, private val onB
             holder.btnNext.setOnClickListener {
                 onButtonClick()
             }
-            holder.btnSkip.visibility = View.VISIBLE
-            holder.btnSkip.setOnClickListener {
-                onSecondaryClick()
-            }
         } else {
             holder.btnNext.visibility = View.GONE
-            holder.btnSkip.visibility = View.GONE
         }
     }
 
@@ -44,6 +39,5 @@ class OnboardingAdapter(private val items: List<OnboardingItem>, private val onB
         val titleText: TextView = itemView.findViewById(R.id.titleText)
         val descriptionText: TextView = itemView.findViewById(R.id.detailText)
         val btnNext: View = itemView.findViewById(R.id.btnNext)
-        val btnSkip: View = itemView.findViewById(R.id.btnSkip)
     }
 }

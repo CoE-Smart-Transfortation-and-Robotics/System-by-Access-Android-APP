@@ -56,17 +56,36 @@ class TrainScheduleActivity : AppCompatActivity() {
         setupClickListeners()
         observeViewModel()
 
+//        if (originStationId != -1 && destinationStationId != -1 && !departureDate.isNullOrEmpty()) {
+//            val inputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH)
+//            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+//            val date = LocalDate.parse(departureDate, inputFormatter)
+//            val formattedDate = date.format(outputFormatter)
+//            // Teruskan trainType ke ViewModel
+//            scheduleViewModel.fetchTrainSchedules(originStationId, destinationStationId, formattedDate, trainTypeId)
+//        } else {
+//            Toast.makeText(this, "Data tidak lengkap", Toast.LENGTH_SHORT).show()
+//            finish()
+//        }
+
         if (originStationId != -1 && destinationStationId != -1 && !departureDate.isNullOrEmpty()) {
-            val inputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH)
-            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val date = LocalDate.parse(departureDate, inputFormatter)
-            val formattedDate = date.format(outputFormatter)
-            // Teruskan trainType ke ViewModel
-            scheduleViewModel.fetchTrainSchedules(originStationId, destinationStationId, formattedDate, trainTypeId)
+            try {
+                // Ganti dari Locale.ENGLISH ke Locale.getDefault()
+                val inputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
+                val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val date = LocalDate.parse(departureDate, inputFormatter)
+                val formattedDate = date.format(outputFormatter)
+
+                scheduleViewModel.fetchTrainSchedules(originStationId, destinationStationId, formattedDate, trainTypeId)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Format tanggal tidak valid: $departureDate", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         } else {
             Toast.makeText(this, "Data tidak lengkap", Toast.LENGTH_SHORT).show()
             finish()
         }
+
     }
 
     private fun setupRecyclerView() {

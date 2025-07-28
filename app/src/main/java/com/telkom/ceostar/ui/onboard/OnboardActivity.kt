@@ -35,9 +35,6 @@ class OnboardActivity : AppCompatActivity() {
         viewPager.adapter = OnboardingAdapter(items, {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-        }, {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
         })
 
     }
