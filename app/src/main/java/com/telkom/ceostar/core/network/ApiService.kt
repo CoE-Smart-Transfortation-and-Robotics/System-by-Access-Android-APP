@@ -1,6 +1,9 @@
 package com.telkom.ceostar.core.network
 
 import com.telkom.ceostar.core.data.model.AuthResponse
+import com.telkom.ceostar.core.data.model.BookingRequest
+import com.telkom.ceostar.core.data.model.BookingResponse
+import com.telkom.ceostar.core.data.model.BookingTicket
 import com.telkom.ceostar.core.data.model.LoginRequest
 import com.telkom.ceostar.core.data.model.RegisterRequest
 import com.telkom.ceostar.core.data.model.ScheduleResponse
@@ -61,5 +64,11 @@ interface ApiService {
         @Query("origin_station_id") originStationId: Int,
         @Query("destination_station_id") destinationStationId: Int,
     ): Response<List<Seat>>
+
+    @POST("/api/bookings")
+    suspend fun createBooking(@Body bookingRequest: BookingRequest): Response<BookingResponse>
+
+    @GET("/api/bookings/mine")
+    suspend fun getMyBookings(): Response<List<BookingTicket>>
 
 }

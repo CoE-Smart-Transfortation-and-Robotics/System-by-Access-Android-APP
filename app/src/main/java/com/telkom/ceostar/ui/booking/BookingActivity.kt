@@ -129,8 +129,16 @@ class BookingActivity : AppCompatActivity() {
             if (validateAllPassengers()) {
                 val intent = Intent(this, ChooseChairActivity::class.java)
 
+                // Convert PassengerInfo to PassengerData
+                val passengerDataList = passengerList.map { passengerInfo ->
+                    PassengerData(
+                        name = passengerInfo.name,
+                        nik = passengerInfo.nik
+                    )
+                }
+
                 // Kirim data passenger sebagai ArrayList
-                intent.putParcelableArrayListExtra("EXTRA_PASSENGER_LIST", ArrayList(passengerList))
+                intent.putParcelableArrayListExtra("EXTRA_PASSENGER_LIST", ArrayList(passengerDataList))
 
                 intent.putExtra("EXTRA_TRAIN_CLASS", trainClass)
                 intent.putExtra("EXTRA_DATA_SCHEDULE", trainData)

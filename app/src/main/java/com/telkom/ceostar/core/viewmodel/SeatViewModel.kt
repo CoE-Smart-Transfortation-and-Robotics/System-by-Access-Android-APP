@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.telkom.ceostar.core.data.model.BookingRequest
+import com.telkom.ceostar.core.data.model.BookingResponse
 import com.telkom.ceostar.core.data.model.Seat
 import com.telkom.ceostar.core.repository.SeatRepository
 import com.telkom.ceostar.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,5 +60,23 @@ class SeatViewModel @Inject constructor(
 
     fun getSeatsByClass(trainClass: String): List<Seat> {
         return _seats.value?.filter { it.`class`.equals(trainClass, ignoreCase = true) } ?: emptyList()
+    }
+
+    // Di SeatViewModel.kt
+    private val _bookingResult = MutableLiveData<Response<BookingResponse>?>()
+    val bookingResult: LiveData<Response<BookingResponse>?> get() = _bookingResult
+
+    fun createBooking(bookingRequest: BookingRequest) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val response = seatRepository.createBooking(bookingRequest)
+                _bookingResult.value = response
+            } catch (e: Exception) {
+                _errorMessage.value = e.localizedMessage
+            } finally {
+                _isLoading.value = false
+            }
+        }
     }
 }

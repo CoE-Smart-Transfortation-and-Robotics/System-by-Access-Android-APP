@@ -1,5 +1,7 @@
 package com.telkom.ceostar.core.repository
 
+import com.telkom.ceostar.core.data.model.BookingRequest
+import com.telkom.ceostar.core.data.model.BookingResponse
 import com.telkom.ceostar.core.data.model.Seat
 import com.telkom.ceostar.core.network.ApiService
 import com.telkom.ceostar.core.utils.Resource
@@ -7,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,4 +44,8 @@ class SeatRepository @Inject constructor(
             emit(Resource.Error("Network error: ${e.localizedMessage}"))
         }
     }.flowOn(Dispatchers.IO)
+
+    suspend fun createBooking(bookingRequest: BookingRequest): Response<BookingResponse> {
+        return apiService.createBooking(bookingRequest)
+    }
 }

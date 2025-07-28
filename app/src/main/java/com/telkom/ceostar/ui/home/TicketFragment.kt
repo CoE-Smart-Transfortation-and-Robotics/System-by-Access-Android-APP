@@ -5,56 +5,96 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
+import com.telkom.ceostar.core.utils.Resource
+import com.telkom.ceostar.core.viewmodel.TicketViewModel
+import com.telkom.ceostar.databinding.FragmentTicketBinding
+import com.telkom.ceostar.databinding.FragmentTrainBinding
+import com.telkom.ceostar.ui.home.adapter.TicketAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import kotlin.getValue
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TicketFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class TicketFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentTicketBinding? = null
+    private val binding get() = _binding!!
+
+    private val ticketViewModel: TicketViewModel by viewModels()
+    private lateinit var ticketAdapter: TicketAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ticket, container, false)
+        _binding = FragmentTicketBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TicketFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TicketFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentTicketBinding.bind(view)
+
+        setupRecyclerView()
+        observeTickets()
+        loadTickets()
+    }
+
+    private fun setupRecyclerView() {
+        ticketAdapter = TicketAdapter()
+        binding.rvTickets.apply {
+            adapter = ticketAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun observeTickets() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            ticketViewModel.ticketsState.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        showLoading(true)
+                        showEmptyState(false)
+                    }
+                    is Resource.Success -> {
+                        showLoading(false)
+                        val tickets = resource.data ?: emptyList()
+                        if (tickets.isEmpty()) {
+                            showEmptyState(true)
+                        } else {
+                            showEmptyState(false)
+                            ticketAdapter.submitList(tickets)
+                        }
+                    }
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showEmptyState(true)
+                        // TODO: Show error message
+                    }
                 }
             }
+        }
     }
+
+    private fun loadTickets() {
+        ticketViewModel.loadMyTickets()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showEmptyState(isEmpty: Boolean) {
+        binding.emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

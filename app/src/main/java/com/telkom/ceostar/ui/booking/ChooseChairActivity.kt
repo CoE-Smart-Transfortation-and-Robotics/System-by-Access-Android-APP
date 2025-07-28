@@ -1,5 +1,6 @@
 package com.telkom.ceostar.ui.booking
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -9,11 +10,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.telkom.ceostar.R
+import com.telkom.ceostar.core.data.model.BookingRequest
+import com.telkom.ceostar.core.data.model.PassengerBooking
 import com.telkom.ceostar.core.data.model.ScheduleData
 import com.telkom.ceostar.core.data.model.Seat
 import com.telkom.ceostar.core.viewmodel.SeatViewModel
 import com.telkom.ceostar.databinding.ActivityChooseChairBinding
+import com.telkom.ceostar.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.compareTo
+import kotlin.text.get
 
 @AndroidEntryPoint
 class ChooseChairActivity : AppCompatActivity() {
@@ -26,6 +32,7 @@ class ChooseChairActivity : AppCompatActivity() {
 
     private val seatViewModel: SeatViewModel by viewModels()
     private var availableSeats: List<Seat> = emptyList()
+    private var passengerList: List<PassengerData> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,8 @@ class ChooseChairActivity : AppCompatActivity() {
         trainData = intent.getParcelableExtra<ScheduleData>("EXTRA_DATA_SCHEDULE")
         trainClass = intent.getStringExtra("EXTRA_TRAIN_CLASS") ?: "Ekonomi"
         maxPassengers = intent.getIntExtra("EXTRA_PASSENGER", 1)
+
+        passengerList = intent.getParcelableArrayListExtra<PassengerData>("EXTRA_PASSENGER_LIST") ?: emptyList()
 
         binding.departureDate.text = trainData?.timing?.scheduleDate + " ~ " + trainData?.timing?.departureTime?.substring(0, 5) + " - " + trainData?.timing?.arrivalTime?.substring(0, 5)
 
@@ -69,6 +78,26 @@ class ChooseChairActivity : AppCompatActivity() {
         }
     }
 
+//    private fun observeViewModel() {
+//        seatViewModel.seats.observe(this) { seats ->
+//            availableSeats = seats
+//            generateSeats()
+//        }
+//
+//        seatViewModel.isLoading.observe(this) { isLoading ->
+//            if (isLoading) {
+//                // Show loading
+//                binding.progressBar.visibility = View.VISIBLE
+//            } else {
+//                binding.progressBar.visibility = View.GONE
+//            }
+//        }
+//
+//        seatViewModel.errorMessage.observe(this) { message ->
+//            android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
     private fun observeViewModel() {
         seatViewModel.seats.observe(this) { seats ->
             availableSeats = seats
@@ -77,7 +106,6 @@ class ChooseChairActivity : AppCompatActivity() {
 
         seatViewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
-                // Show loading
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
@@ -87,12 +115,28 @@ class ChooseChairActivity : AppCompatActivity() {
         seatViewModel.errorMessage.observe(this) { message ->
             android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_SHORT).show()
         }
+
+        // Observer untuk hasil booking
+        seatViewModel.bookingResult.observe(this) { result ->
+            result?.let {
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "Booking berhasil!", Toast.LENGTH_SHORT).show()
+
+                    // Kembali ke HomeActivity dan clear all activities
+                    val intent = Intent(this, HomeActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Booking gagal: ${it.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupUI() {
-        // Show appropriate layout based on train class
-        Toast.makeText(this, trainClass, Toast.LENGTH_SHORT).show()
-        when (trainClass) {
+        when (trainClass.uppercase()) {
             "EKONOMI" -> {
                 binding.ekonomiLayout.visibility = View.VISIBLE
                 binding.eksekutifLayout.visibility = View.GONE
@@ -107,7 +151,7 @@ class ChooseChairActivity : AppCompatActivity() {
     }
 
     private fun generateSeats() {
-        when (trainClass) {
+        when (trainClass.uppercase()) {
             "EKONOMI" -> generateEkonomiSeats()
             "EKSEKUTIF" -> generateEksekutifSeats()
         }
@@ -117,7 +161,7 @@ class ChooseChairActivity : AppCompatActivity() {
         val gridLayout = binding.ekonomiSeats
         gridLayout.removeAllViews()
 
-        for (row in 1..10) {
+        for (row in 1..18) {
             for (col in 1..4) {
                 val seatNumber = "${row}${('A' + col - 1)}"
                 val seatButton = createSeatButton(seatNumber)
@@ -138,9 +182,25 @@ class ChooseChairActivity : AppCompatActivity() {
         val gridLayout = binding.eksekutifSeats
         gridLayout.removeAllViews()
 
-        for (row in 1..10) {
-            for (col in 1..2) {
+        for (row in 1..13) {
+            for (col in 1..4) {
                 val seatNumber = "${row}${('A' + col - 1)}"
+
+                // Create invisible view for seats 1D and 13A to maintain layout
+                if (seatNumber == "1D" || seatNumber == "13A") {
+                    val emptyView = View(this).apply {
+                        val params = GridLayout.LayoutParams().apply {
+                            width = 120
+                            height = 120
+                            setMargins(8, 8, 8, 8)
+                        }
+                        layoutParams = params
+                        visibility = View.INVISIBLE
+                    }
+                    gridLayout.addView(emptyView)
+                    continue
+                }
+
                 val seatButton = createSeatButton(seatNumber)
 
                 val params = GridLayout.LayoutParams().apply {
@@ -163,11 +223,15 @@ class ChooseChairActivity : AppCompatActivity() {
             setTextColor(ContextCompat.getColor(this@ChooseChairActivity, R.color.black))
         }
 
-        // Simulate some occupied seats (you can replace this with real data)
-        val occupiedSeats = setOf("")
-        if (occupiedSeats.contains(seatNumber)) {
+        // Check if seat is booked from API data - handle case conversion
+        val seat = availableSeats.find {
+            it.seat_number == seatNumber && it.`class`.equals(trainClass, ignoreCase = true)
+        }
+
+        if (seat != null && seat.is_booked == 1) {
             button.background = ContextCompat.getDrawable(this, R.drawable.seat_occupied)
             button.isEnabled = false
+            button.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
 
         button.setOnClickListener {
@@ -229,16 +293,54 @@ class ChooseChairActivity : AppCompatActivity() {
 
         binding.buttonConfirm.setOnClickListener {
             if (selectedSeats.size != maxPassengers) {
-                android.widget.Toast.makeText(this, "Silakan pilih ${maxPassengers} kursi sesuai jumlah penumpang", android.widget.Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Silakan pilih ${maxPassengers} kursi sesuai jumlah penumpang", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Return selected seats to previous activity
-            val resultIntent = android.content.Intent().apply {
-                putStringArrayListExtra("SELECTED_SEATS", ArrayList(selectedSeats))
-            }
-            setResult(RESULT_OK, resultIntent)
+            // Create booking
+            createBooking()
+        }
+    }
 
+    private fun createBooking() {
+        val selectedSeatsList = selectedSeats.toList()
+        val passengers = mutableListOf<PassengerBooking>()
+
+        for (i in selectedSeatsList.indices) {
+            if (i < passengerList.size) {
+                // Find seat_id from availableSeats based on seat_number
+                val seat = availableSeats.find {
+                    it.seat_number == selectedSeatsList[i] &&
+                            it.`class`.equals(trainClass, ignoreCase = true)
+                }
+
+                if (seat != null) {
+                    passengers.add(
+                        PassengerBooking(
+                            seat_id = seat.seat_id,
+                            name = passengerList[i].name,
+                            nik = passengerList[i].nik
+                        )
+                    )
+                }
+            }
+        }
+
+        if (passengers.size == maxPassengers) {
+            val bookingRequest = BookingRequest(
+                train_id = trainData?.train?.trainId ?: 0,
+                schedule_date = trainData?.timing?.scheduleDate ?: "",
+                origin_station_id = intent.getIntExtra("EXTRA_ORIGIN_ID", -1),
+                destination_station_id = intent.getIntExtra("EXTRA_DESTINATION_ID", -1),
+                passengers = passengers
+            )
+
+            seatViewModel.createBooking(bookingRequest)
+
+
+
+        } else {
+            Toast.makeText(this, "Data penumpang tidak lengkap", Toast.LENGTH_SHORT).show()
         }
     }
 }
