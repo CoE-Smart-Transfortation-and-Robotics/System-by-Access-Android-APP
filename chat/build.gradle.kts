@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.hilt)
@@ -7,16 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.telkom.ceostar"
+    namespace = "com.telkom.chat"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.telkom.ceostar"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
+        minSdk = 24
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,11 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        viewBinding = true
-    }
-    dynamicFeatures += setOf(":admin", ":chat")
-
 }
 
 dependencies {
