@@ -39,6 +39,8 @@ class TrainTypeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.decorView.systemUiVisibility = 0
+
         binding = ActivityTrainTypeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

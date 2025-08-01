@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Untuk status bar icon gelap (teks hitam)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.decorView.systemUiVisibility = 0
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

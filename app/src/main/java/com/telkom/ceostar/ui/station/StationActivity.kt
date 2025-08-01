@@ -35,6 +35,9 @@ class StationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = 0
+
         binding = ActivityStationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -3,6 +3,7 @@ package com.telkom.ceostar.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,8 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = 0
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)

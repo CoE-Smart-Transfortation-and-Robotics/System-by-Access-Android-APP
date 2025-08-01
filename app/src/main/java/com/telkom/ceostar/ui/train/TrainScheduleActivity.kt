@@ -29,6 +29,8 @@ class TrainScheduleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.decorView.systemUiVisibility = 0
+
         binding = ActivityTrainScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
