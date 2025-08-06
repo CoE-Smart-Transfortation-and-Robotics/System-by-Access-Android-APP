@@ -23,6 +23,7 @@ class PreferencesManager @Inject constructor(private val context: Context) {
         val USER_ID = stringPreferencesKey(Constants.USER_ID_KEY)
         val USER_NAME = stringPreferencesKey(Constants.USER_NAME_KEY)
         val USER_EMAIL = stringPreferencesKey(Constants.USER_EMAIL_KEY)
+        val USER_ROLE = stringPreferencesKey(Constants.USER_ROLE_KEY)
     }
 
     suspend fun saveAuthData(token: String, user: User) {
@@ -45,9 +46,10 @@ class PreferencesManager @Inject constructor(private val context: Context) {
             val id = preferences[PreferencesKeys.USER_ID]?.toIntOrNull()
             val name = preferences[PreferencesKeys.USER_NAME]
             val email = preferences[PreferencesKeys.USER_EMAIL]
+            val role = preferences[PreferencesKeys.USER_ROLE] ?: "user"
 
             if (id != null && name != null && email != null) {
-                User(id = id, name = name, email = email)
+                User(id = id, name = name, email = email, role = role)
             } else {
                 null
             }

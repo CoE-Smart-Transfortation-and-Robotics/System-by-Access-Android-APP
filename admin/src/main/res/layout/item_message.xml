@@ -91,15 +91,6 @@
                     android:textSize="12sp"
                     tools:text="10:32 AM" />
 
-                <ImageView
-                    android:id="@+id/iv_message_status"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="4dp"
-                    android:src="@drawable/ic_check"
-                    android:tint="@android:color/white"
-                    tools:src="@drawable/ic_check" />
-
             </LinearLayout>
 
         </LinearLayout>

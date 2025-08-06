@@ -6,20 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.telkom.ceostar.MainActivity
 import com.telkom.ceostar.R
 import com.telkom.ceostar.core.data.model.ScheduleData
-import com.telkom.ceostar.core.data.model.UserProfile
 import com.telkom.ceostar.core.viewmodel.UserViewModel
 import com.telkom.ceostar.databinding.ActivityBookingBinding
-import com.telkom.ceostar.databinding.ActivityRegisterBinding
 import com.telkom.ceostar.ui.recylerview.PassengerInfo
+import com.telkom.core.data.model.PassengerData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 

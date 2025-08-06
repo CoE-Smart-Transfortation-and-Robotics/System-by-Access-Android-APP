@@ -6,6 +6,7 @@ object Constants {
     const val USER_ID_KEY = "user_id"
     const val USER_NAME_KEY = "user_name"
     const val USER_EMAIL_KEY = "user_email"
+    const val USER_ROLE_KEY = "user_role"
 
     // HTTP Status Codes
     const val HTTP_OK = 200

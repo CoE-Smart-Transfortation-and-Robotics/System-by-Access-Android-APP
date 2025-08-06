@@ -17,9 +17,8 @@ import com.telkom.ceostar.core.data.model.Seat
 import com.telkom.ceostar.core.viewmodel.SeatViewModel
 import com.telkom.ceostar.databinding.ActivityChooseChairBinding
 import com.telkom.ceostar.ui.home.HomeActivity
+import com.telkom.core.data.model.PassengerData
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.compareTo
-import kotlin.text.get
 
 @AndroidEntryPoint
 class ChooseChairActivity : AppCompatActivity() {

@@ -56,18 +56,4 @@
         app:layout_constraintTop_toTopOf="@+id/tv_name"
         tools:text="10:30" />
 
-    <TextView
-        android:id="@+id/tv_unread_count"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/circle_red"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_last_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="3"
-        tools:visibility="visible" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

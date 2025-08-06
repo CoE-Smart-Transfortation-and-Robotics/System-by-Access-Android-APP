@@ -3,7 +3,7 @@ package com.telkom.ceostar.core.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.telkom.ceostar.core.data.model.BookingTicket
-import com.telkom.ceostar.core.repository.TicketRepository
+import com.telkom.core.data.repository.TicketRepository
 import com.telkom.ceostar.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

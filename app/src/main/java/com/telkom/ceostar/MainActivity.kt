@@ -55,14 +55,17 @@ class MainActivity : AppCompatActivity() {
                         // Connection successful, proceed with session check
                         navigateToNextScreen()
                     }
+
                     is Resource.Error -> {
                         // Connection failed, show error view
                         showServerDownView()
                         Toast.makeText(this@MainActivity, resource.message, Toast.LENGTH_LONG).show()
                     }
+
                     is Resource.Loading -> {
                         // Show loading state, splash screen is already visible
                     }
+
                     null -> {
                         // Initial state
                     }
@@ -75,12 +78,35 @@ class MainActivity : AppCompatActivity() {
         // Cek apakah token ada
         if (sessionManager.fetchAuthToken() != null) {
             // Jika ada, langsung ke HomeActivity
-            startActivity(Intent(this, HomeActivity::class.java))
+            if (sessionManager.fetchUserRole() == "admin") {
+                try {
+                    val intent = Intent().apply {
+                        setClassName(
+                            this@MainActivity,
+                            "com.telkom.admin.ui.AdminActivity"
+                        )
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                    finish()
+                } catch (e: Exception) {
+                    // Fallback jika dynamic feature belum ter-install
+                    Toast.makeText(this@MainActivity, "Admin module tidak tersedia", Toast.LENGTH_SHORT).show()
+                    // Atau redirect ke HomeActivity sebagai fallback
+                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                // Jika bukan admin, ke OnboardActivity
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
         } else {
             // Jika tidak ada, ke OnboardActivity
             startActivity(Intent(this, OnboardActivity::class.java))
         }
-        finish() // Tutup MainActivity (splash screen)
+        finish()
     }
 
     private fun showServerDownView() {

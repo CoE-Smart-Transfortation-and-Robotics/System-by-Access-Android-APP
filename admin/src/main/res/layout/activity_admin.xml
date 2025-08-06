@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.AdminActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_main"
@@ -36,9 +37,9 @@
                     android:id="@+id/buttonBack"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="start|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/arrow_back"
+                    android:src="@drawable/logout_icon"
                     app:tint="@android:color/white" />
 
                 <TextView

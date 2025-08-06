@@ -68,9 +68,11 @@ class ConfirmationActivity : AppCompatActivity() {
                         binding.buttonLogin.isEnabled = false
                         binding.buttonLogin.text = "Loading..."
                     }
+
                     is Resource.Success -> {
 
                         val responseData = resource.data
+                        val role = responseData?.user?.role ?: "user"
                         val token = responseData?.token
                         // Asumsi respons Anda memiliki field 'expires_in' dalam detik.
                         // Ganti 3600L dengan nilai default yang sesuai jika perlu.
@@ -78,24 +80,54 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         if (token != null) {
                             // Simpan token beserta waktu kedaluwarsanya
-                            sessionManager.saveAuthToken(token, expiresIn)
+                            sessionManager.saveAuthToken(token, expiresIn, role)
                         }
 
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"
-                        Toast.makeText(this@ConfirmationActivity, "Login berhasil!", Toast.LENGTH_SHORT).show()
 
-                        // Redirect to MainActivity
-                        val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
+                        if (role == "admin") {
+                            try {
+                                val intent = Intent().apply {
+                                    setClassName(
+                                        this@ConfirmationActivity,
+                                        "com.telkom.admin.ui.AdminActivity"
+                                    )
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                }
+                                startActivity(intent)
+                                finish()
+                            } catch (e: Exception) {
+                                // Fallback jika dynamic feature belum ter-install
+                                Toast.makeText(this@ConfirmationActivity, "Admin module tidak tersedia", Toast.LENGTH_SHORT).show()
+                                // Atau redirect ke HomeActivity sebagai fallback
+                                val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                        } else {
+                            // Redirect to UserActivity
+                            val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+
+//                        // Redirect to MainActivity
+
                     }
+
                     is Resource.Error -> {
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"
-                        Toast.makeText(this@ConfirmationActivity, "Login gagal: ${resource.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@ConfirmationActivity,
+                            "Login gagal: ${resource.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+
                     null -> {
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"

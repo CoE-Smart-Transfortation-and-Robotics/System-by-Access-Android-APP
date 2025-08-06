@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.telkom.ceostar.core.data.model.BookingRequest
 import com.telkom.ceostar.core.data.model.BookingResponse
 import com.telkom.ceostar.core.data.model.Seat
-import com.telkom.ceostar.core.repository.SeatRepository
+import com.telkom.core.data.repository.SeatRepository
 import com.telkom.ceostar.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
