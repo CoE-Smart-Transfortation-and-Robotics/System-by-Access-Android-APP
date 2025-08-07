@@ -2,20 +2,16 @@ package com.telkom.ceostar.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
 import com.telkom.ceostar.databinding.FragmentTrainBinding
-import com.telkom.ceostar.databinding.FragmentUserBinding
-import com.telkom.ceostar.ui.recylerview.MenuUser
-import com.telkom.ceostar.ui.recylerview.MenuUserAdapter
 import com.telkom.ceostar.ui.recylerview.TrainType
 import com.telkom.ceostar.ui.recylerview.TrainTypeAdapter
 import com.telkom.ceostar.ui.train.TrainTypeActivity
-import com.telkom.ceostar.ui.user.ProfileActivity
 
 class TrainFragment : Fragment() {
 

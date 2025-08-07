@@ -1,9 +1,7 @@
 package com.telkom.ceostar.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,11 +9,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
-import com.telkom.ceostar.MainActivity
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.viewmodel.AuthViewModel
 import com.telkom.ceostar.databinding.ActivityRegisterBinding
+import com.telkom.core.utils.Resource
+import com.telkom.core.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

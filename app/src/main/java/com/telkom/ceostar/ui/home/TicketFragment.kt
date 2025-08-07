@@ -1,22 +1,19 @@
 package com.telkom.ceostar.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.telkom.ceostar.R
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.viewmodel.TicketViewModel
 import com.telkom.ceostar.databinding.FragmentTicketBinding
-import com.telkom.ceostar.databinding.FragmentTrainBinding
 import com.telkom.ceostar.ui.home.adapter.TicketAdapter
+import com.telkom.core.utils.Resource
+import com.telkom.core.viewmodel.TicketViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
 class TicketFragment : Fragment() {

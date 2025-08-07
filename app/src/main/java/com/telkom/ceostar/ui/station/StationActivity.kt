@@ -3,7 +3,6 @@ package com.telkom.ceostar.ui.station
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.viewmodel.StationViewModel
 import com.telkom.ceostar.databinding.ActivityStationBinding
 import com.telkom.ceostar.ui.recylerview.StationList
 import com.telkom.ceostar.ui.recylerview.StationListAdapter
+import com.telkom.core.viewmodel.StationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

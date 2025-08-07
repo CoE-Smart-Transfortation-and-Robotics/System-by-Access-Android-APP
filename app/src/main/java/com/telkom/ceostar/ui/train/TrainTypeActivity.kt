@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +15,9 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.MaterialDatePicker.*
+import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.data.model.UserProfile
-import com.telkom.ceostar.databinding.ActivityRegisterBinding
 import com.telkom.ceostar.databinding.ActivityTrainTypeBinding
-import com.telkom.ceostar.ui.onboard.OnboardActivity
 import com.telkom.ceostar.ui.station.StationActivity
 import java.text.SimpleDateFormat
 import java.util.Date

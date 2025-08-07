@@ -2,23 +2,19 @@ package com.telkom.ceostar.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.viewmodel.UserViewModel
 import com.telkom.ceostar.databinding.FragmentHomeBinding
-import com.telkom.ceostar.databinding.FragmentUserBinding
 import com.telkom.ceostar.ui.recylerview.TrainType
 import com.telkom.ceostar.ui.recylerview.TrainTypeAdapter
 import com.telkom.ceostar.ui.train.TrainTypeActivity
-import com.telkom.ceostar.ui.user.ProfileActivity
+import com.telkom.core.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

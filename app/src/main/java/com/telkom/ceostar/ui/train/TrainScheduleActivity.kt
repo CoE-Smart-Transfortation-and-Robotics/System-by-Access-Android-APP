@@ -10,9 +10,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.viewmodel.ScheduleViewModel
+
 import com.telkom.ceostar.databinding.ActivityTrainScheduleBinding
 import com.telkom.ceostar.ui.recylerview.TrainScheduleAdapter
+import com.telkom.core.viewmodel.ScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

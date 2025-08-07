@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.telkom.ceostar.core.data.model.BookingTicket
+import com.telkom.core.data.model.BookingTicket
 import com.telkom.ceostar.databinding.ViewItemTicketBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat

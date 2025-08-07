@@ -10,11 +10,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.data.model.BookingRequest
-import com.telkom.ceostar.core.data.model.PassengerBooking
-import com.telkom.ceostar.core.data.model.ScheduleData
-import com.telkom.ceostar.core.data.model.Seat
-import com.telkom.ceostar.core.viewmodel.SeatViewModel
+import com.telkom.core.data.model.BookingRequest
+import com.telkom.core.data.model.PassengerBooking
+import com.telkom.core.data.model.ScheduleData
+import com.telkom.core.data.model.Seat
+import com.telkom.core.viewmodel.SeatViewModel
 import com.telkom.ceostar.databinding.ActivityChooseChairBinding
 import com.telkom.ceostar.ui.home.HomeActivity
 import com.telkom.core.data.model.PassengerData

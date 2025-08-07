@@ -10,8 +10,9 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.telkom.admin.R
 import com.telkom.admin.databinding.ActivityAdminBinding
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.viewmodel.AuthViewModel
+import com.telkom.core.utils.Resource
+import com.telkom.core.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 //@AndroidEntryPoint
@@ -19,7 +20,7 @@ class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminBinding
 
-    private val authViewModel: AuthViewModel by viewModels()
+//    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,29 +44,29 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun observePingResult() {
-        lifecycleScope.launch {
-            authViewModel.connectionState.collect { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        // Connection successful, proceed with session check
-                        Toast.makeText(this@AdminActivity, "Sukses", Toast.LENGTH_LONG).show()
-                    }
-
-                    is Resource.Error -> {
-                        // Connection failed, show error view
-                        Toast.makeText(this@AdminActivity, "Gagal", Toast.LENGTH_LONG).show()
-                    }
-
-                    is Resource.Loading -> {
-                        // Show loading state, splash screen is already visible
-                        Toast.makeText(this@AdminActivity, resource.message, Toast.LENGTH_LONG).show()
-                    }
-
-                    null -> {
-                        // Initial state
-                    }
-                }
-            }
-        }
+//        lifecycleScope.launch {
+//            authViewModel.connectionState.collect { resource ->
+//                when (resource) {
+//                    is Resource.Success -> {
+//                        // Connection successful, proceed with session check
+//                        Toast.makeText(this@AdminActivity, "Sukses", Toast.LENGTH_LONG).show()
+//                    }
+//
+//                    is Resource.Error -> {
+//                        // Connection failed, show error view
+//                        Toast.makeText(this@AdminActivity, "Gagal", Toast.LENGTH_LONG).show()
+//                    }
+//
+//                    is Resource.Loading -> {
+//                        // Show loading state, splash screen is already visible
+//                        Toast.makeText(this@AdminActivity, resource.message, Toast.LENGTH_LONG).show()
+//                    }
+//
+//                    null -> {
+//                        // Initial state
+//                    }
+//                }
+//            }
+//        }
     }
 }

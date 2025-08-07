@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.utils.SessionManager
-import com.telkom.ceostar.core.viewmodel.AuthViewModel
 import com.telkom.ceostar.databinding.ActivityMainBinding
 import com.telkom.ceostar.ui.home.HomeActivity
 import com.telkom.ceostar.ui.onboard.OnboardActivity
+import com.telkom.core.utils.Resource
+import com.telkom.core.utils.SessionManager
+import com.telkom.core.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

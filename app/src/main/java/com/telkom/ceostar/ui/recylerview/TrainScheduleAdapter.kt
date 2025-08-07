@@ -4,13 +4,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.telkom.ceostar.core.data.model.ScheduleData
 import com.telkom.ceostar.databinding.ViewTrainScheduleBinding
 import com.telkom.ceostar.ui.booking.BookingActivity
+import com.telkom.core.data.model.ScheduleData
 import java.text.NumberFormat
 import java.time.Duration
 import java.time.LocalTime
