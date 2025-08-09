@@ -17,6 +17,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CeOStar"
 include(":app")
-include(":admin")
-include(":chat")
 include(":core")
+include(":admin")

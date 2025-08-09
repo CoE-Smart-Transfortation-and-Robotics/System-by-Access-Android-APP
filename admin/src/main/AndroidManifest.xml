@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <dist:module
         dist:instant="false"
         dist:title="@string/title_admin">
@@ -17,10 +14,7 @@
 
     <application>
         <activity
-            android:name=".ui.AdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ChatActivity"
+            android:name=".AdminActivity"
             android:exported="false" />
     </application>
 

@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("org.jetbrains.kotlin.kapt")
+//    id("org.jetbrains.kotlin.kapt")
+    kotlin("kapt")
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
 }
@@ -39,13 +40,15 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    dynamicFeatures += setOf(":admin", ":chat")
+    dynamicFeatures += setOf(":admin")
 
 }
 
 dependencies {
 
-    implementation(project(":core"))
+//    implementation(project(":core"))
+
+    api(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -54,7 +57,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Hilt
-    implementation(libs.hilt.android)
+//    implementation(libs.hilt.android)
+    api(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     implementation("com.squareup:javapoet:1.13.0")

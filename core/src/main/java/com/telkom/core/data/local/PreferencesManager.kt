@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.telkom.core.data.model.User
 import com.telkom.core.utils.Constants
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_preferences")
 
 @Singleton
-class PreferencesManager @Inject constructor(private val context: Context) {
+class PreferencesManager @Inject constructor(@ApplicationContext private val context: Context) {
 
     private object PreferencesKeys {
         val TOKEN = stringPreferencesKey(Constants.TOKEN_KEY)

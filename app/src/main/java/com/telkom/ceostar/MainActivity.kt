@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent().apply {
                         setClassName(
                             this@MainActivity,
-                            "com.telkom.admin.ui.AdminActivity"
+                            "com.telkom.admin.AdminActivity"
                         )
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }

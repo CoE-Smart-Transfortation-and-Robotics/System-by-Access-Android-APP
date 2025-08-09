@@ -85,7 +85,7 @@ class ConfirmationActivity : AppCompatActivity() {
                                 val intent = Intent().apply {
                                     setClassName(
                                         this@ConfirmationActivity,
-                                        "com.telkom.admin.ui.AdminActivity"
+                                        "com.telkom.admin.AdminActivity"
                                     )
                                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 }
