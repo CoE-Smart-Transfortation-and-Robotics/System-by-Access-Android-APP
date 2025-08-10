@@ -4,6 +4,7 @@ import com.telkom.core.data.model.AuthResponse
 import com.telkom.core.data.model.BookingRequest
 import com.telkom.core.data.model.BookingResponse
 import com.telkom.core.data.model.BookingTicket
+import com.telkom.core.data.model.ChatItem
 import com.telkom.core.data.model.LoginRequest
 import com.telkom.core.data.model.RegisterRequest
 import com.telkom.core.data.model.ScheduleResponse
@@ -70,5 +71,8 @@ interface ApiService {
 
     @GET("/api/bookings/mine")
     suspend fun getMyBookings(): Response<List<BookingTicket>>
+
+    @GET("/api/chat/all")
+    suspend fun getAllChat(): Response<List<ChatItem>>
 
 }

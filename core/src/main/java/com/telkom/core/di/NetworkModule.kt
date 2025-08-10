@@ -1,5 +1,7 @@
 package com.telkom.core.di
 
+import android.content.Context
+import com.telkom.core.data.local.PreferencesManager
 import com.telkom.core.network.ApiService
 import com.telkom.core.network.AuthInterceptor
 import com.telkom.core.utils.Constants
@@ -61,21 +63,48 @@ object NetworkModule {
         return retrofit.create(ApiService::class.java)
     }
 
-    fun createApiService(): ApiService {
+//    fun createApiService(): ApiService {
+//        val loggingInterceptor = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
+//
+//        val okHttpClient = OkHttpClient.Builder()
+//            .addInterceptor(loggingInterceptor)
+//            .connectTimeout(30, TimeUnit.SECONDS)
+//            .readTimeout(30, TimeUnit.SECONDS)
+//            .writeTimeout(30, TimeUnit.SECONDS)
+//            .build()
+//
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl(Constants.BASE_URL)
+//            .client(okHttpClient)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//
+//        return retrofit.create(ApiService::class.java)
+//    }
+
+    fun createApiService(context: Context? = null): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        val okHttpClient = OkHttpClient.Builder()
+        val okHttpClientBuilder = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
+
+        // Fix: SessionManager mengharapkan Context, bukan PreferencesManager
+        context?.let {
+            val sessionManager = SessionManager(it) // Pass context langsung
+            val authInterceptor = AuthInterceptor(sessionManager)
+            okHttpClientBuilder.addInterceptor(authInterceptor)
+        }
 
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .client(okHttpClient)
+            .client(okHttpClientBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
