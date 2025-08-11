@@ -5,5 +5,7 @@ data class UrgencyAnalysis(
     val confidence: Double,
     val category: String,
     val reason: String,
-    val analyzed_at: AnalyzedAt
+    val analyzed_at: String // Ubah dari AnalyzedAt ke String
 )
+
+// Hapus data class AnalyzedAt karena tidak digunakan

@@ -1,23 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
-//    id("org.jetbrains.kotlin.kapt")
     kotlin("kapt")
     alias(libs.plugins.hilt)
-    id("kotlin-parcelize")
 }
-
 android {
-    namespace = "com.telkom.ceostar"
+    namespace = "com.telkom.chat"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.telkom.ceostar"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,15 +32,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    dynamicFeatures += setOf(":admin", ":chat")
-
 }
 
 dependencies {
-
-//    implementation(project(":core"))
-
-    api(project(":core"))
+    implementation(project(":app"))
+    implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -57,10 +45,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Hilt
-//    implementation(libs.hilt.android)
-    api(libs.hilt.android)
-    api("androidx.hilt:hilt-navigation-fragment:1.0.0")
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     implementation("com.squareup:javapoet:1.13.0")
 

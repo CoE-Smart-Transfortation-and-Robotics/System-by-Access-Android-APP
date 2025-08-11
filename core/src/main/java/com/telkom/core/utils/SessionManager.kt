@@ -15,16 +15,18 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
     companion object {
         const val USER_TOKEN = "user_token"
         const val USER_ROLE = "user_role"
+        const val USER_ID = "user_id"
         // 1. Key untuk waktu kedaluwarsa
         const val EXPIRATION_TIME = "expiration_time"
     }
 
     // 2. Modifikasi saveAuthToken
-    fun saveAuthToken(token: String, expiresIn: Long, role: String = "user") {
+    fun saveAuthToken(token: String, expiresIn: Long, role: String = "user", id: Int) {
         // `expiresIn` adalah durasi dalam detik dari API
         val expirationTime = System.currentTimeMillis() + (expiresIn * 1000)
         editor.putString(USER_TOKEN, token)
-        editor.putString(USER_ROLE, role) // Simpan role user, bisa disesuaikan
+        editor.putString(USER_ROLE, role)
+        editor.putInt(USER_ID, id)
         editor.putLong(EXPIRATION_TIME, expirationTime)
         editor.apply()
     }
@@ -35,6 +37,10 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
 
     fun fetchUserRole(): String? {
         return prefs.getString(USER_ROLE, null)
+    }
+
+    fun fetchUserId(): Int? {
+        return prefs.getInt(USER_ID, 0)
     }
 
     // 3. Fungsi untuk cek kedaluwarsa
@@ -48,6 +54,7 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
     fun clearAuthToken() {
         editor.remove(USER_TOKEN)
         editor.remove(USER_ROLE)
+        editor.remove(USER_ID)
         editor.remove(EXPIRATION_TIME)
         editor.apply()
     }

@@ -162,6 +162,16 @@ class UserFragment : Fragment() {
                 startActivity(goToProfile)
             }
 
+            binding.chatButton.setOnClickListener {
+                val intent = Intent().apply {
+                    setClassName(
+                        requireContext(),
+                        "com.telkom.chat.ChatActivity"
+                    )
+                }
+                startActivity(intent)
+            }
+
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -214,10 +224,6 @@ class UserFragment : Fragment() {
         super.onResume()
         observeProfile()
         viewModel.getProfile()
-    }
-
-    companion object {
-        fun newInstance() = UserFragment()
     }
 
 }

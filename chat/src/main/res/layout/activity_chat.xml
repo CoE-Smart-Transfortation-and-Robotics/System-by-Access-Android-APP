@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".AdminActivity">
+    tools:context=".ChatActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,19 +39,20 @@
                     android:layout_marginEnd="18dp">
 
                     <ImageButton
-                        android:id="@+id/logoutButton"
+                        android:id="@+id/backButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="end|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/logout_icon"
+                        android:src="@drawable/arrow_back"
                         app:tint="@android:color/white" />
 
                     <TextView
+                        android:id="@+id/toolbarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Daftar Chat"
+                        android:text="Chat Dengan KAI"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -59,7 +60,7 @@
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- Content Area -->
+        <!-- Chat Content Area -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -68,103 +69,110 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar_main">
 
+            <!-- Chat Messages RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewChat"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_chat_message" />
+
             <!-- Loading Progress -->
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerViewChat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewChat" />
 
             <!-- Empty State -->
             <LinearLayout
                 android:id="@+id/empty_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
+                android:orientation="vertical"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerViewChat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewChat">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Belum Ada Yang Ngechat Nih!"
+                    android:text="Belum ada chat nih"
                     android:textColor="@color/grey"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Belum ada yang ngirim pesan ke kamu, sabar ya!"
-                    android:textAlignment="center"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
             </LinearLayout>
 
-
-            <!-- Chat List -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewChats"
+            <!-- Message Input Container -->
+            <RelativeLayout
+                android:id="@+id/inputContainer"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_chat" />
+                app:layout_constraintStart_toStartOf="parent">
 
-            <!-- Error State -->
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/errorStateLayout"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:gravity="center"-->
-            <!--                android:orientation="vertical"-->
-            <!--                android:visibility="gone"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent">-->
+                <!-- Message Input EditText -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_toStartOf="@id/buttonSend"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeColor="@color/primary"
+                    app:hintEnabled="false">
 
-            <!--                <ImageView-->
-            <!--                    android:layout_width="80dp"-->
-            <!--                    android:layout_height="80dp"-->
-            <!--                    android:layout_marginBottom="16dp"-->
-            <!--                    android:src="@drawable/ic_error"-->
-            <!--                    app:tint="@color/red" />-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ketik pesan..."
+                        android:imeOptions="actionSend"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLines="4"
+                        android:minHeight="48dp"
+                        android:padding="12dp" />
 
-            <!--                <TextView-->
-            <!--                    android:id="@+id/errorMessage"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="Terjadi kesalahan"-->
-            <!--                    android:textColor="@color/red"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    android:textAlignment="center" />-->
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <!--                <Button-->
-            <!--                    android:id="@+id/retryButton"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="16dp"-->
-            <!--                    android:text="Coba Lagi"-->
-            <!--                    android:backgroundTint="@color/primary" />-->
-            <!--            </LinearLayout>-->
+                <!-- Send Button -->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/buttonSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="@color/primary"
+                    android:src="@drawable/send_icon"
+                    app:fabSize="mini"
+                    app:tint="@android:color/white" />
+
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

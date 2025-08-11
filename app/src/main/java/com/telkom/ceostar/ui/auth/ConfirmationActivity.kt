@@ -67,6 +67,7 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         val responseData = resource.data
                         val role = responseData?.user?.role ?: "user"
+                        val userId = responseData?.user?.id ?: 0
                         val token = responseData?.token
                         // Asumsi respons Anda memiliki field 'expires_in' dalam detik.
                         // Ganti 3600L dengan nilai default yang sesuai jika perlu.
@@ -74,7 +75,7 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         if (token != null) {
                             // Simpan token beserta waktu kedaluwarsanya
-                            sessionManager.saveAuthToken(token, expiresIn, role)
+                            sessionManager.saveAuthToken(token, expiresIn, role, userId)
                         }
 
                         binding.buttonLogin.isEnabled = true

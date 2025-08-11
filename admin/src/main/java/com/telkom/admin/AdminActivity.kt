@@ -1,5 +1,6 @@
 package com.telkom.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.telkom.admin.viewmodel.TestConnection
 import com.telkom.ceostar.R
 import com.telkom.core.data.model.ChatItem
 import com.telkom.core.utils.Resource
+import com.telkom.core.utils.SessionManager
 import kotlinx.coroutines.launch
 
 class AdminActivity : AppCompatActivity() {
@@ -26,6 +28,8 @@ class AdminActivity : AppCompatActivity() {
     private lateinit var testConnectionViewModel: TestConnection
     private lateinit var chatViewModel: ChatViewModel
     private lateinit var chatAdapter: ChatAdapter
+
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,8 @@ class AdminActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+
+        sessionManager = SessionManager(this)
 
         setupViewModels()
         setupRecyclerView()
@@ -81,12 +87,15 @@ class AdminActivity : AppCompatActivity() {
                         // Load chat data after successful connection
                         chatViewModel.getAllChats()
                     }
+
                     is Resource.Error -> {
                         showErrorState(resource.message ?: "Koneksi gagal")
                     }
+
                     is Resource.Loading -> {
                         showLoadingState()
                     }
+
                     null -> {}
                 }
             }
@@ -97,16 +106,19 @@ class AdminActivity : AppCompatActivity() {
             chatViewModel.chatListState.collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
-//                        handleChatListSuccess(resource.data)
+                        handleChatListSuccess(resource.data!!)
                         Toast.makeText(this@AdminActivity, "Berhasil memuat chat", Toast.LENGTH_LONG).show()
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(this@AdminActivity, resource.message ?: "Gagal memuat chat", Toast.LENGTH_LONG).show()
                         showErrorState(resource.message ?: "Gagal memuat chat")
                     }
+
                     is Resource.Loading -> {
                         showLoadingState()
                     }
+
                     null -> {}
                 }
             }
@@ -120,6 +132,7 @@ class AdminActivity : AppCompatActivity() {
 
         binding.logoutButton.setOnClickListener {
             // Handle logout
+            signOut()
             finish()
         }
     }
@@ -148,13 +161,13 @@ class AdminActivity : AppCompatActivity() {
 
     private fun showEmptyState() {
         hideAllStates()
-//        binding.emptyStateLayout.isVisible = true
+        binding.emptyState.isVisible = true
     }
 
     private fun hideAllStates() {
         binding.progressBar.isVisible = false
 //        binding.errorStateLayout.isVisible = false
-//        binding.emptyStateLayout.isVisible = false
+        binding.emptyState.isVisible = false
         binding.recyclerViewChats.isVisible = false
     }
 
@@ -164,6 +177,20 @@ class AdminActivity : AppCompatActivity() {
         // val intent = Intent(this, ChatDetailActivity::class.java)
         // intent.putExtra("chat_id", chatItem.id)
         // startActivity(intent)
+    }
+
+    private fun signOut() {
+        sessionManager.clearAuthToken()
+
+        val intent = Intent().apply {
+            setClassName(
+                this@AdminActivity,
+                "com.telkom.ceostar.ui.onboard.OnboardActivity" // Adjust this to your actual OnboardActivity class path
+            )
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 
 //    private fun observeConnection() {

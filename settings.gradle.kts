@@ -19,3 +19,4 @@ rootProject.name = "CeOStar"
 include(":app")
 include(":core")
 include(":admin")
+include(":chat")

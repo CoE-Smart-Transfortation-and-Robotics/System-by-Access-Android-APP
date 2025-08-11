@@ -5,10 +5,12 @@ import com.telkom.core.data.model.BookingRequest
 import com.telkom.core.data.model.BookingResponse
 import com.telkom.core.data.model.BookingTicket
 import com.telkom.core.data.model.ChatItem
+import com.telkom.core.data.model.ChatMessage
 import com.telkom.core.data.model.LoginRequest
 import com.telkom.core.data.model.RegisterRequest
 import com.telkom.core.data.model.ScheduleResponse
 import com.telkom.core.data.model.Seat
+import com.telkom.core.data.model.SendMessageRequest
 import com.telkom.core.data.model.Station
 import com.telkom.core.data.model.Trains
 import com.telkom.core.data.model.UpdateProfileRequest
@@ -75,4 +77,13 @@ interface ApiService {
     @GET("/api/chat/all")
     suspend fun getAllChat(): Response<List<ChatItem>>
 
+    @GET("/api/chat")
+    suspend fun getChatWithUser(
+        @Query("with_user_id") userId: Int
+    ): Response<List<ChatMessage>>
+
+    @POST("/api/chat")
+    suspend fun sendMessage(
+        @Body message: SendMessageRequest
+    ): Response<ChatMessage>
 }
