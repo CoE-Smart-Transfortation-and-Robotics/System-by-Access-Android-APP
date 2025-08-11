@@ -84,6 +84,18 @@ class ChatActivity : AppCompatActivity() {
         chatViewModel.loadChatMessages()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Start auto refresh saat activity visible
+        chatViewModel.startAutoRefresh()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Stop auto refresh saat activity tidak visible
+        chatViewModel.stopAutoRefresh()
+    }
+
     private fun setupUI() {
         val targetUserName = intent.getStringExtra(EXTRA_TARGET_USER_ID)
         val isAdmin = sessionManager.fetchUserRole()
@@ -119,7 +131,7 @@ class ChatActivity : AppCompatActivity() {
             chatViewModel.messagesState.collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
                     }
 
                     is Resource.Success -> {
@@ -158,14 +170,14 @@ class ChatActivity : AppCompatActivity() {
                 when (resource) {
                     is Resource.Loading -> {
                         binding.buttonSend.isEnabled = false
-                        binding.progressBar.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
                         binding.editTextMessage.isEnabled = false
                     }
                     is Resource.Success -> {
                         binding.buttonSend.isEnabled = true
                         binding.editTextMessage.setText("")
                         chatViewModel.clearSendMessageState()
-
+                        chatViewModel.loadChatMessages()
                         binding.recyclerViewChat.post {
                             if (chatAdapter.itemCount > 0) {
                                 binding.recyclerViewChat.smoothScrollToPosition(chatAdapter.itemCount - 1)

@@ -6,9 +6,12 @@ import com.telkom.core.data.model.ChatMessage
 import com.telkom.core.data.repository.ChatRepository
 import com.telkom.core.utils.Resource
 import com.telkom.core.utils.SessionManager
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,6 +21,9 @@ class ChatViewModel(
     private val sessionManager: SessionManager,
     private val targetUserId: Int? = null // Parameter untuk admin chat dengan user tertentu
 ) : ViewModel() {
+
+    private var refreshJob: Job? = null
+    private val refreshIntervalMs = 3000L
 
     private val _messagesState = MutableStateFlow<Resource<List<ChatMessage>>?>(null)
     val messagesState: StateFlow<Resource<List<ChatMessage>>?> = _messagesState.asStateFlow()
@@ -31,6 +37,22 @@ class ChatViewModel(
     // Menentukan target chat
     private fun getChatTargetId(): Int {
         return targetUserId ?: 1 // Jika null (user), chat ke admin (ID=1). Jika ada value (admin), chat ke user tersebut
+    }
+
+    fun startAutoRefresh() {
+        stopAutoRefresh() // Stop job sebelumnya jika ada
+
+        refreshJob = viewModelScope.launch {
+            while (isActive) {
+                delay(refreshIntervalMs)
+                loadChatMessages()
+            }
+        }
+    }
+
+    fun stopAutoRefresh() {
+        refreshJob?.cancel()
+        refreshJob = null
     }
 
     fun loadChatMessages() {
@@ -105,4 +127,8 @@ class ChatViewModel(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        stopAutoRefresh()
+    }
 }
