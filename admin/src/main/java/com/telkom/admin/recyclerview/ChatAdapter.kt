@@ -35,8 +35,19 @@ class ChatAdapter(
         fun bind(chatItem: ChatItem) {
             with(binding) {
                 // Set sender name based on role
+                var urgent = "Not Urgent"
+                if (chatItem.is_urgent) {
+                    urgent = "Urgent"
+                    root.setBackgroundColor(
+                        itemView.context.getColor(com.telkom.ceostar.R.color.secondary)
+                    )
+                } else {
+                    root.setBackgroundColor(
+                        itemView.context.getColor(android.R.color.white)
+                    )
+                }
                 senderNameTextView.text = when (chatItem.sender_role) {
-                    "user" -> "User #${chatItem.sender_id}"
+                    "user" -> "User #${chatItem.sender_id} (${urgent})"
                     "admin" -> "Admin #${chatItem.sender_id}"
                     else -> "Unknown User"
                 }
@@ -63,7 +74,7 @@ class ChatAdapter(
 
                 // Set click listener
                 root.setOnClickListener {
-//                    onChatClick(chatItem)
+                    onChatClick(chatItem)
                 }
             }
         }

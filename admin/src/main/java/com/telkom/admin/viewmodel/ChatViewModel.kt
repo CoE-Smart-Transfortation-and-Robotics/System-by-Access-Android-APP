@@ -25,8 +25,32 @@ class ChatViewModel(
 
     fun getAllChats() {
         viewModelScope.launch {
-            chatRepository.getAllChats().collect {
-                _chatListState.value = it
+            _chatListState.value = Resource.Loading()
+            chatRepository.getAllChats().collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        val chatList = resource.data ?: emptyList<ChatItem>()
+
+                        // Filter out chat dari admin sendiri
+                        val filteredList = chatList.filter { chatItem ->
+                            chatItem.sender_role != "admin"
+                        }
+
+                        // Sort berdasarkan urgency dulu, lalu timestamp
+                        val sortedList = filteredList.sortedWith(
+                            compareByDescending<ChatItem> { it.is_urgent }
+                                .thenByDescending { it.timestamp }
+                        )
+
+                        _chatListState.value = Resource.Success(sortedList)
+                    }
+                    is Resource.Error -> {
+                        _chatListState.value = resource
+                    }
+                    is Resource.Loading -> {
+                        _chatListState.value = resource
+                    }
+                }
             }
         }
     }
@@ -42,8 +66,25 @@ class ChatViewModel(
     fun refreshChats() {
         _isRefreshing.value = true
         viewModelScope.launch {
-            chatRepository.getAllChats().collect {
-                _chatListState.value = it
+            chatRepository.getAllChats().collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        val chatList = resource.data ?: emptyList<ChatItem>()
+
+                        // Filter out chat dari admin sendiri
+                        val filteredList = chatList.filter { chatItem ->
+                            chatItem.sender_role != "admin"
+                        }
+
+                        _chatListState.value = Resource.Success(filteredList)
+                    }
+                    is Resource.Error -> {
+                        _chatListState.value = resource
+                    }
+                    is Resource.Loading -> {
+                        _chatListState.value = resource
+                    }
+                }
                 _isRefreshing.value = false
             }
         }

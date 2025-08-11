@@ -11,5 +11,5 @@
     <string name="change_language">Change Language</string>
     <string name="logout">Sign Out</string>
     <string name="lihat_profile">See Profile</string>
-    <string name="qr_code">QR Code</string>
+    <string name="qr_code">Chat</string>
 </resources>

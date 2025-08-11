@@ -84,7 +84,6 @@ class AdminActivity : AppCompatActivity() {
                 when (resource) {
                     is Resource.Success -> {
                         Toast.makeText(this@AdminActivity, "Koneksi berhasil", Toast.LENGTH_SHORT).show()
-                        // Load chat data after successful connection
                         chatViewModel.getAllChats()
                     }
 
@@ -109,32 +108,57 @@ class AdminActivity : AppCompatActivity() {
                         handleChatListSuccess(resource.data!!)
                         Toast.makeText(this@AdminActivity, "Berhasil memuat chat", Toast.LENGTH_LONG).show()
                     }
-
                     is Resource.Error -> {
                         Toast.makeText(this@AdminActivity, resource.message ?: "Gagal memuat chat", Toast.LENGTH_LONG).show()
                         showErrorState(resource.message ?: "Gagal memuat chat")
                     }
-
                     is Resource.Loading -> {
                         showLoadingState()
                     }
-
                     null -> {}
                 }
+            }
+        }
+
+        // Observe refresh state
+        lifecycleScope.launch {
+            chatViewModel.isRefreshing.collect { isRefreshing ->
+                binding.swipeRefreshLayout.isRefreshing = isRefreshing
             }
         }
     }
 
     private fun setupClickListeners() {
-//        binding.retryButton.setOnClickListener {
-//            chatViewModel.getAllChats()
-//        }
-
         binding.logoutButton.setOnClickListener {
-            // Handle logout
             signOut()
             finish()
         }
+
+        // Setup SwipeRefreshLayout
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.primary)
+            setOnRefreshListener {
+                chatViewModel.refreshChats()
+            }
+        }
+    }
+
+    private fun hideAllStates() {
+        binding.progressBar.isVisible = false
+        binding.emptyState.isVisible = false
+        binding.swipeRefreshLayout.isVisible = true
+    }
+
+    private fun showEmptyState() {
+        binding.progressBar.isVisible = false
+        binding.emptyState.isVisible = true
+        binding.swipeRefreshLayout.isVisible = true
+    }
+
+    private fun showLoadingState() {
+        binding.progressBar.isVisible = true
+        binding.emptyState.isVisible = false
+        binding.swipeRefreshLayout.isVisible = false
     }
 
     private fun handleChatListSuccess(chatList: List<ChatItem>) {
@@ -148,10 +172,6 @@ class AdminActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoadingState() {
-        hideAllStates()
-        binding.progressBar.isVisible = true
-    }
 
     private fun showErrorState(message: String) {
         hideAllStates()
@@ -159,24 +179,22 @@ class AdminActivity : AppCompatActivity() {
 //        binding.errorMessage.text = message
     }
 
-    private fun showEmptyState() {
-        hideAllStates()
-        binding.emptyState.isVisible = true
-    }
 
-    private fun hideAllStates() {
-        binding.progressBar.isVisible = false
-//        binding.errorStateLayout.isVisible = false
-        binding.emptyState.isVisible = false
-        binding.recyclerViewChats.isVisible = false
-    }
 
     private fun onChatItemClick(chatItem: ChatItem) {
-        Toast.makeText(this, "Chat clicked: ${chatItem.message}", Toast.LENGTH_SHORT).show()
-        // TODO: Navigate to chat detail
-        // val intent = Intent(this, ChatDetailActivity::class.java)
-        // intent.putExtra("chat_id", chatItem.id)
-        // startActivity(intent)
+        // Ambil user_id dari sender (user yang chat ke admin)
+        val targetUserId = chatItem.sender_id
+//        val targetUserName = chatItem.sender_name ?: "User" // Jika ada field sender_name
+
+        val intent = Intent().apply {
+            setClassName(
+                this@AdminActivity,
+                "com.telkom.chat.ChatActivity"
+            )
+            putExtra("target_user_id", targetUserId)
+//            putExtra("target_user_name", targetUserName)
+        }
+        startActivity(intent)
     }
 
     private fun signOut() {
@@ -193,31 +211,4 @@ class AdminActivity : AppCompatActivity() {
         finish()
     }
 
-//    private fun observeConnection() {
-//        lifecycleScope.launch {
-//            viewModel.connectionState.collect { resource ->
-//                when (resource) {
-//                    is Resource.Success -> {
-//                        // Connection successful, proceed with session check
-////                        navigateToNextScreen()
-//                        Toast.makeText(this@AdminActivity, "Berhasil", Toast.LENGTH_LONG).show()
-//                    }
-//
-//                    is Resource.Error -> {
-//                        // Connection failed, show error view
-////                        showServerDownView()
-//                        Toast.makeText(this@AdminActivity, resource.message, Toast.LENGTH_LONG).show()
-//                    }
-//
-//                    is Resource.Loading -> {
-//                        // Show loading state, splash screen is already visible
-//                    }
-//
-//                    null -> {
-//                        // Initial state
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

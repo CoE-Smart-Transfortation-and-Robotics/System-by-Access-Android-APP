@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
                     android:text="adadadada"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="14sp" />
 
             </com.google.android.material.card.MaterialCardView>

@@ -32,7 +32,7 @@ class ChatActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TARGET_USER_ID = "target_user_id"
-        const val EXTRA_TARGET_USER_NAME = "target_user_name"
+//        const val EXTRA_TARGET_USER_NAME = "target_user_name"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,10 +85,10 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        val targetUserName = intent.getStringExtra(EXTRA_TARGET_USER_NAME)
+        val targetUserName = intent.getStringExtra(EXTRA_TARGET_USER_ID)
         val isAdmin = sessionManager.fetchUserRole()
 
-        if (isAdmin == "admin" && targetUserName != null) {
+        if (isAdmin == "admin") {
             binding.toolbarTitle.text = "Chat dengan $targetUserName"
         } else {
             binding.toolbarTitle.text = "Chat dengan Admin"
@@ -121,6 +121,7 @@ class ChatActivity : AppCompatActivity() {
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         val messages = resource.data ?: emptyList()
@@ -141,6 +142,7 @@ class ChatActivity : AppCompatActivity() {
                             }
                         }
                     }
+
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         Toast.makeText(this@ChatActivity, "DISINI ERROR", Toast.LENGTH_SHORT).show()
@@ -156,6 +158,8 @@ class ChatActivity : AppCompatActivity() {
                 when (resource) {
                     is Resource.Loading -> {
                         binding.buttonSend.isEnabled = false
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.editTextMessage.isEnabled = false
                     }
                     is Resource.Success -> {
                         binding.buttonSend.isEnabled = true
