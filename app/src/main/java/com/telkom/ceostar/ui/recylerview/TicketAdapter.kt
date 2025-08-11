@@ -1,4 +1,4 @@
-package com.telkom.ceostar.ui.home.adapter
+package com.telkom.ceostar.ui.recylerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -59,13 +59,13 @@ class TicketAdapter : ListAdapter<BookingTicket, TicketAdapter.TicketViewHolder>
                 // Status color
                 when (ticket.status.lowercase()) {
                     "pending" -> {
-                        tvStatus.setBackgroundResource(android.R.color.holo_orange_dark)
+                        tvStatus.setBackgroundResource(com.telkom.ceostar.R.color.secondary)
                     }
                     "confirmed" -> {
-                        tvStatus.setBackgroundResource(android.R.color.holo_green_dark)
+                        tvStatus.setBackgroundResource(com.telkom.ceostar.R.color.lightGreen)
                     }
                     "cancelled" -> {
-                        tvStatus.setBackgroundResource(android.R.color.holo_red_dark)
+                        tvStatus.setBackgroundResource(com.telkom.ceostar.R.color.lightGrey)
                     }
                 }
 

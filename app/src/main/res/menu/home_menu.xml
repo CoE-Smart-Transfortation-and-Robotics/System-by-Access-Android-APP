@@ -20,11 +20,11 @@
         app:showAsAction="always"
         android:icon="@drawable/ticket_icon" />
 
-    <item
-        android:id="@+id/promo"
-        android:title="Promo"
-        app:showAsAction="always"
-        android:icon="@drawable/promo_icon"/>
+<!--    <item-->
+<!--        android:id="@+id/promo"-->
+<!--        android:title="Promo"-->
+<!--        app:showAsAction="always"-->
+<!--        android:icon="@drawable/promo_icon"/>-->
 
     <item
         android:id="@+id/fragment_user"

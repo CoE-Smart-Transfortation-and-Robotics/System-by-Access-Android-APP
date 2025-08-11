@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.databinding.FragmentTicketBinding
-import com.telkom.ceostar.ui.home.adapter.TicketAdapter
+import com.telkom.ceostar.ui.recylerview.TicketAdapter
 import com.telkom.core.utils.Resource
 import com.telkom.core.viewmodel.TicketViewModel
 import dagger.hilt.android.AndroidEntryPoint
