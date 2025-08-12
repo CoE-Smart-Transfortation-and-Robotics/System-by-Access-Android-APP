@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/primary"
     tools:context=".ui.home.HomeActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -23,20 +25,22 @@
         android:id="@+id/card_view_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
         app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
+            style="@style/CustomBottomNavigationStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/white"
             app:itemIconTint="@drawable/nav_color"
             app:itemTextColor="@drawable/nav_color"
-            style="@style/CustomBottomNavigationStyle"
             app:menu="@menu/home_menu" />
 
     </androidx.cardview.widget.CardView>

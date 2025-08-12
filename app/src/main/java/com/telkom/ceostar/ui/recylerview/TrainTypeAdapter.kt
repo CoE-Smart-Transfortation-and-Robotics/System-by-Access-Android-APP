@@ -3,8 +3,6 @@ package com.telkom.ceostar.ui.recylerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.telkom.ceostar.R
-import com.telkom.ceostar.databinding.ViewButtonUserBinding
 import com.telkom.ceostar.databinding.ViewTrainTypeListBinding
 
 class TrainTypeAdapter(private val trainItems: List<TrainType>) : RecyclerView.Adapter<TrainTypeAdapter.ViewHolder>() {

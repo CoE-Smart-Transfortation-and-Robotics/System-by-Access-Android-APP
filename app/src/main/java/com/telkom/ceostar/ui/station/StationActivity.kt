@@ -3,7 +3,6 @@ package com.telkom.ceostar.ui.station
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.viewmodel.StationViewModel
 import com.telkom.ceostar.databinding.ActivityStationBinding
 import com.telkom.ceostar.ui.recylerview.StationList
 import com.telkom.ceostar.ui.recylerview.StationListAdapter
+import com.telkom.core.viewmodel.StationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,11 +28,15 @@ class StationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_STATION_NAME = "extra_station_name"
         const val EXTRA_STATION_CODE = "extra_station_code"
+        const val EXTRA_STATION_ID = "extra_station_id"
         const val EXTRA_TYPE = "extra_type"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = 0
+
         binding = ActivityStationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -88,6 +91,7 @@ class StationActivity : AppCompatActivity() {
                     // 2. Masukkan data yang ingin dikirim kembali
                     resultIntent.putExtra(EXTRA_STATION_NAME, station.station_name)
                     resultIntent.putExtra(EXTRA_STATION_CODE, station.station_code)
+                    resultIntent.putExtra(EXTRA_STATION_ID, station.id)
                     resultIntent.putExtra(EXTRA_TYPE, intent.getStringExtra(EXTRA_TYPE))
 
                     // 3. Atur hasilnya menjadi OK dan sertakan intent data

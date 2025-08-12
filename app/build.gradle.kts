@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("org.jetbrains.kotlin.kapt")
+//    id("org.jetbrains.kotlin.kapt")
+    kotlin("kapt")
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
 }
@@ -12,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.telkom.ceostar"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -39,9 +40,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dynamicFeatures += setOf(":admin", ":chat")
+
 }
 
 dependencies {
+
+//    implementation(project(":core"))
+
+    api(project(":core"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -49,7 +57,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Hilt
-    implementation(libs.hilt.android)
+//    implementation(libs.hilt.android)
+    api(libs.hilt.android)
+    api("androidx.hilt:hilt-navigation-fragment:1.0.0")
     kapt(libs.hilt.compiler)
 
     implementation("com.squareup:javapoet:1.13.0")
@@ -81,6 +91,11 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    // Midtrans
+
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

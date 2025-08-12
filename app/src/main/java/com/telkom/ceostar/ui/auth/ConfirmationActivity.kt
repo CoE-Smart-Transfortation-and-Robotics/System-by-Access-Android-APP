@@ -2,9 +2,7 @@ package com.telkom.ceostar.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,18 +10,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.utils.SessionManager
-import com.telkom.ceostar.core.viewmodel.AuthViewModel
 import com.telkom.ceostar.databinding.ActivityConfirmationBinding
-import com.telkom.ceostar.databinding.ActivityLoginBinding
-import com.telkom.ceostar.databinding.ActivityRegisterBinding
-import com.telkom.ceostar.ui.auth.RegisterActivity
 import com.telkom.ceostar.ui.home.HomeActivity
+import com.telkom.core.utils.Resource
+import com.telkom.core.utils.SessionManager
+import com.telkom.core.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.getValue
 
 @AndroidEntryPoint
 class ConfirmationActivity : AppCompatActivity() {
@@ -38,6 +32,8 @@ class ConfirmationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = 0
 
         binding = ActivityConfirmationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -66,9 +62,12 @@ class ConfirmationActivity : AppCompatActivity() {
                         binding.buttonLogin.isEnabled = false
                         binding.buttonLogin.text = "Loading..."
                     }
+
                     is Resource.Success -> {
 
                         val responseData = resource.data
+                        val role = responseData?.user?.role ?: "user"
+                        val userId = responseData?.user?.id ?: 0
                         val token = responseData?.token
                         // Asumsi respons Anda memiliki field 'expires_in' dalam detik.
                         // Ganti 3600L dengan nilai default yang sesuai jika perlu.
@@ -76,24 +75,54 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         if (token != null) {
                             // Simpan token beserta waktu kedaluwarsanya
-                            sessionManager.saveAuthToken(token, expiresIn)
+                            sessionManager.saveAuthToken(token, expiresIn, role, userId)
                         }
 
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"
-                        Toast.makeText(this@ConfirmationActivity, "Login berhasil!", Toast.LENGTH_SHORT).show()
 
-                        // Redirect to MainActivity
-                        val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
+                        if (role == "admin") {
+                            try {
+                                val intent = Intent().apply {
+                                    setClassName(
+                                        this@ConfirmationActivity,
+                                        "com.telkom.admin.AdminActivity"
+                                    )
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                }
+                                startActivity(intent)
+                                finish()
+                            } catch (e: Exception) {
+                                // Fallback jika dynamic feature belum ter-install
+                                Toast.makeText(this@ConfirmationActivity, "Admin module tidak tersedia", Toast.LENGTH_SHORT).show()
+                                // Atau redirect ke HomeActivity sebagai fallback
+                                val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                        } else {
+                            // Redirect to UserActivity
+                            val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+
+//                        // Redirect to MainActivity
+
                     }
+
                     is Resource.Error -> {
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"
-                        Toast.makeText(this@ConfirmationActivity, "Login gagal: ${resource.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@ConfirmationActivity,
+                            "Login gagal: ${resource.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+
                     null -> {
                         binding.buttonLogin.isEnabled = true
                         binding.buttonLogin.text = "MASUK"

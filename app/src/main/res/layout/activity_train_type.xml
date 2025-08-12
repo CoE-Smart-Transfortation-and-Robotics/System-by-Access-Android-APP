@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     tools:context=".ui.train.TrainTypeActivity">
 
@@ -111,6 +112,16 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                <TextView
+                    android:id="@+id/origin_station_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    android:text="Dari"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -133,6 +144,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
+                    android:text="Dari"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/destination_station_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
                     android:text="Dari"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -211,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:text="1 Dewasa"
+                    android:text="0 Dewasa"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

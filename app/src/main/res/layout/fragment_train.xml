@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="32dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="16dp"
     android:background="@color/white"
     tools:context=".ui.home.TrainFragment">
 
@@ -29,7 +27,7 @@
         android:id="@+id/rv_train_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         tools:listitem="@layout/view_train_type_list" />
 
 </LinearLayout>

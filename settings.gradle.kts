@@ -3,6 +3,7 @@ pluginManagement {
         google {}
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -10,9 +11,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "CeOStar"
 include(":app")
- 
+include(":core")
+include(":admin")
+include(":chat")

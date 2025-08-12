@@ -3,15 +3,13 @@ package com.telkom.ceostar.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.viewmodel.AuthViewModel
 import com.telkom.ceostar.databinding.ActivityLoginBinding
-import com.telkom.ceostar.ui.home.HomeActivity
+import com.telkom.core.viewmodel.AuthViewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,6 +18,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = 0
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -3,32 +3,27 @@ package com.telkom.ceostar.ui.home
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import androidx.fragment.app.viewModels
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.utils.SessionManager
 import com.telkom.ceostar.databinding.FragmentUserBinding
 import com.telkom.ceostar.ui.onboard.OnboardActivity
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import androidx.core.graphics.drawable.toDrawable
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.telkom.ceostar.core.viewmodel.UserViewModel
-import com.telkom.ceostar.ui.auth.ConfirmationActivity
 import com.telkom.ceostar.ui.recylerview.MenuUser
 import com.telkom.ceostar.ui.recylerview.MenuUserAdapter
-import com.telkom.ceostar.ui.recylerview.ViewType
 import com.telkom.ceostar.ui.user.AboutActivity
 import com.telkom.ceostar.ui.user.ProfileActivity
+import com.telkom.core.utils.SessionManager
+import com.telkom.core.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UserFragment : Fragment() {
@@ -167,6 +162,16 @@ class UserFragment : Fragment() {
                 startActivity(goToProfile)
             }
 
+            binding.chatButton.setOnClickListener {
+                val intent = Intent().apply {
+                    setClassName(
+                        requireContext(),
+                        "com.telkom.chat.ChatActivity"
+                    )
+                }
+                startActivity(intent)
+            }
+
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -219,10 +224,6 @@ class UserFragment : Fragment() {
         super.onResume()
         observeProfile()
         viewModel.getProfile()
-    }
-
-    companion object {
-        fun newInstance() = UserFragment()
     }
 
 }

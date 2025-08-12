@@ -11,11 +11,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.telkom.ceostar.R
-import com.telkom.ceostar.core.data.model.UserProfile
-import com.telkom.ceostar.core.utils.Resource
-import com.telkom.ceostar.core.viewmodel.UserViewModel
+
 import com.telkom.ceostar.databinding.ActivityProfileBinding
 import com.telkom.ceostar.databinding.ActivityRegisterBinding
+import com.telkom.core.data.model.UserProfile
+import com.telkom.core.utils.Resource
+import com.telkom.core.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

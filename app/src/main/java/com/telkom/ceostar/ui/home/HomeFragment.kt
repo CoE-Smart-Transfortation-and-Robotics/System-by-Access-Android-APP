@@ -1,60 +1,115 @@
 package com.telkom.ceostar.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.telkom.ceostar.R
+import com.telkom.ceostar.databinding.FragmentHomeBinding
+import com.telkom.ceostar.ui.recylerview.TrainType
+import com.telkom.ceostar.ui.recylerview.TrainTypeAdapter
+import com.telkom.ceostar.ui.train.TrainTypeActivity
+import com.telkom.core.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentHomeBinding.bind(view)
+
+        val trainType = listOf(
+            TrainType(
+                title = "Antar Kota",
+                trainImage = R.drawable.antar_kota,
+//                trainImage = R.drawable.train_icon,
+                onClick = {
+                    goToTrainType("Antar Kota", 1)
                 }
-            }
+            ),
+            TrainType(
+                title = "LRT",
+                trainImage = R.drawable.lrt,
+//                trainImage = R.drawable.train_icon,
+                onClick = {
+                    goToTrainType("Antar Kota", 1)
+                }
+            ),
+            TrainType(
+                title = "Lokal",
+                trainImage = R.drawable.lokal,
+//                trainImage = R.drawable.train_icon,
+                onClick = {
+                    goToTrainType("Antar Kota", 1)
+                }
+            ),
+            TrainType(
+                title = "Commuter Line",
+                trainImage = R.drawable.commuter,
+//                trainImage = R.drawable.train_icon,
+                onClick = {
+                    goToTrainType("Antar Kota", 1)
+                }
+            ),
+            TrainType(
+                title = "Whoosh",
+                trainImage = R.drawable.whoosh,
+//                trainImage = R.drawable.train_icon,
+                onClick = {
+                    goToTrainType("Antar Kota", 1)
+                }
+            )
+        )
+
+        val trainTypeAdapter = TrainTypeAdapter(trainType)
+        binding.rvTrainList.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = trainTypeAdapter
+        }
+
+        observeProfile()
+        viewModel.getProfile()
     }
+
+    private fun goToTrainType(type: String, typeId: Int) {
+        val goToType = Intent(context, TrainTypeActivity::class.java)
+        goToType.putExtra("EXTRA_TYPE", type)
+        goToType.putExtra("EXTRA_TYPE_ID", typeId)
+        startActivity(goToType)
+
+    }
+
+    private fun observeProfile(){
+
+        viewModel.profile.observe(viewLifecycleOwner) { profile ->
+            android.util.Log.d("UserFragment", "Profile received: $profile")
+            binding.namaUser.text = profile.name
+
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            android.util.Log.d("UserFragment", "Loading state: $isLoading")
+            if (!isLoading) {
+                binding.namaUser.visibility = View.VISIBLE
+            }
+        }
+    }
+
 }
